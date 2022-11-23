@@ -1,3 +1,5 @@
+import { PokemonList } from "../../model/IPokemonList";
+
 export interface IGetPokemonListGateway {
-  execute(): string;
+  execute(): Promise<PokemonList>;
 }
