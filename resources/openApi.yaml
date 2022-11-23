@@ -1,0 +1,121 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "POKEDEX"
+  description: "pokemon searching tool"
+schemes:
+  - "http"
+  - "https"
+produces:
+  - "application/json"
+tags:
+  - name: pokemon
+    description: Endpoints using pokemon 
+
+paths:
+  /pokemon/{id}:
+    get:
+      tags:
+        - pokemon
+      description: "get a pokemon by id"
+      operationId: "getPokemonById"
+      parameters:
+        - in: path
+          required: true
+          name: id
+          type: number
+      responses:
+        "200":
+          description: "ok"
+          schema:
+            $ref: "#/definitions/Pokemon"
+        "400":
+          description: "Response with error."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Response with error."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          
+definitions:
+
+  Pokemon:
+    type: "object"
+    required:
+      - name
+    properties:
+      name:
+        type: "string"
+      height:
+        type: "number"
+      weight:
+        type: "number"
+      frontSprite:
+        type: "string"
+      types:
+        type: "array"
+        items: 
+          $ref: "#/definitions/Types"
+      abilities:
+        type: "array"
+        items:
+          $ref: "#/definitions/Abilities"
+          
+  Types:
+    type: "object"
+    required:
+      - type
+      - slot
+    properties:
+      slot:
+        type: "number"
+      type:
+          $ref: "#/definitions/Type"
+
+  Type:
+    type: "object"
+    required:
+      - name
+      - url
+    properties:
+      name:
+        type: "string"
+      url:
+        type: "string"
+        
+  Abilities: 
+    type: "object"
+    required:
+      - is_hidden
+    properties:
+      is_hidden: 
+        type: "boolean"
+      slot:
+        type: "number"
+      ability:
+          $ref: "#/definitions/Ability"
+        
+  Ability:
+    type: "object"
+    required:
+      - name
+      - url
+    properties:
+      name: 
+        type: "string"
+      url:
+        type: "string"
+          
+  ErrorResponse:
+    type: "object"
+    required:
+      - message
+    properties:
+      messages:
+        type: "array"
+        items:
+          type: "string"
+        example:
+          - "foo"
+          - "bar"    
