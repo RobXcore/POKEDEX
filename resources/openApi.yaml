@@ -58,7 +58,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
             
-  /pokemon/{region}:
+  /pokemon/region/{region}:
     get:
       tags:
         - pokemon
