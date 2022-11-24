@@ -5,10 +5,9 @@ import { PokemonApi } from "./model/IPokemonApi";
 
 export class getPokemonByUrlGateway implements IGetPokemonByUrlGateway {
   async execute(url: string): Promise<Pokemon> {
-    const pokemonApi = fetch(url)
-      .then((response) => response.json())
-      .then((response) => response as PokemonApi);
+    const responseApi = await fetch(url);
+    const pokemonApi = (await responseApi.json()) as PokemonApi;
 
-    return pokemonApiToPokemonMapper(await pokemonApi);
+    return pokemonApiToPokemonMapper(pokemonApi);
   }
 }
