@@ -57,7 +57,7 @@ paths:
           description: "Response with error."
           schema:
             $ref: "#/definitions/ErrorResponse"
-            
+
   /pokemon/{region}:
     get:
       tags:
@@ -82,7 +82,7 @@ paths:
           description: "Response with error."
           schema:
             $ref: "#/definitions/ErrorResponse"
-
+            
 definitions:
   AllPokemonResponse:
     type: "object"
