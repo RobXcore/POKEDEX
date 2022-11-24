@@ -10,9 +10,29 @@ produces:
   - "application/json"
 tags:
   - name: pokemon
-    description: Endpoints using pokemon 
+    description: Endpoints using pokemon
 
 paths:
+  /pokemon/all:
+    get:
+      tags:
+        - pokemon
+      description: "Returns all pokemon information"
+      operationId: "getAllPokemon"
+      responses:
+        "200":
+          description: "Success"
+          schema:
+            $ref: "#/definitions/AllPokemonResponse"
+        "400":
+          description: "Response with error."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Response with error."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
   /pokemon/{id}:
     get:
       tags:
@@ -37,8 +57,42 @@ paths:
           description: "Response with error."
           schema:
             $ref: "#/definitions/ErrorResponse"
-          
+
+  /pokemon/{region}:
+    get:
+      tags:
+        - pokemon
+      description: "gets a pokemon by their region of origin"
+      operationId: "getPokemonByRegion"
+      parameters:
+        - in: path
+          required: true
+          name: region
+          type: string
+      responses:
+        "200":
+          description: "ok"
+          schema:
+            $ref: "#/definitions/Pokemon"
+        "400":
+          description: "Response with error."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Response with error."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+            
 definitions:
+  AllPokemonResponse:
+    type: "object"
+    required:
+      - "allPokemon"
+    properties:
+      allPokemon:
+        type: "array"
+        items:
+          $ref: "#/definitions/Pokemon"
 
   Pokemon:
     type: "object"
@@ -55,25 +109,14 @@ definitions:
         type: "string"
       types:
         type: "array"
-        items: 
-          $ref: "#/definitions/Types"
+        items:
+          $ref: "#/definitions/NameUrl"
       abilities:
         type: "array"
         items:
-          $ref: "#/definitions/Abilities"
-          
-  Types:
-    type: "object"
-    required:
-      - type
-      - slot
-    properties:
-      slot:
-        type: "number"
-      type:
-          $ref: "#/definitions/Type"
+          $ref: "#/definitions/NameUrl"
 
-  Type:
+  NameUrl:
     type: "object"
     required:
       - name
@@ -83,30 +126,7 @@ definitions:
         type: "string"
       url:
         type: "string"
-        
-  Abilities: 
-    type: "object"
-    required:
-      - is_hidden
-    properties:
-      is_hidden: 
-        type: "boolean"
-      slot:
-        type: "number"
-      ability:
-          $ref: "#/definitions/Ability"
-        
-  Ability:
-    type: "object"
-    required:
-      - name
-      - url
-    properties:
-      name: 
-        type: "string"
-      url:
-        type: "string"
-          
+
   ErrorResponse:
     type: "object"
     required:
@@ -118,4 +138,4 @@ definitions:
           type: "string"
         example:
           - "foo"
-          - "bar"    
+          - "bar"
