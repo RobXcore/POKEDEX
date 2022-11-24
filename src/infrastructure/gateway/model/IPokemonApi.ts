@@ -5,11 +5,21 @@ export interface PokemonApi {
   height: number;
   weight: number;
   frontSprite: string;
-  types: Type[];
-  abilities: Ability[];
+  types: TypeApi[];
+  abilities: AbilityApi[];
   sprites: Sprite;
 }
 
 interface Sprite {
   front_default: string;
+}
+
+export interface AbilityApi {
+  slot: number;
+  ability: Ability;
+}
+
+export interface TypeApi {
+  slot: number;
+  type: Type;
 }
