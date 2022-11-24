@@ -1,7 +1,7 @@
 import { Ability, Pokemon, Type } from "../../../domain/model/IPokemon";
 import { AbilityApi, PokemonApi, TypeApi } from "../model/IPokemonApi";
 
-const pokemonApiToPokemonMapper = (pokemonApi: PokemonApi) => {
+const PokemonApiToPokemonMapper = (pokemonApi: PokemonApi) => {
   const { name, height, weight, types, abilities, sprites } = pokemonApi;
 
   const pokemon: Pokemon = {
@@ -40,4 +40,4 @@ const typeMapper = (types: TypeApi[]) => {
   return typesData;
 };
 
-export default pokemonApiToPokemonMapper;
+export default PokemonApiToPokemonMapper;

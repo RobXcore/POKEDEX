@@ -1,13 +1,13 @@
-import { getAllPokemonUseCase } from "../../domain/usecase/getAllPokemonUseCase";
-import { getPokemonListGateway } from "../gateway/getPokemonListGateway";
-import { getPokemonByUrlGateway } from "../gateway/getPokemonByUrlGateway";
-import { pokemonController } from "../controller/pokemonController";
+import { GetAllPokemonUseCase } from "../../domain/usecase/GetAllPokemonUseCase";
+import { GetPokemonListGateway } from "../gateway/GetPokemonListGateway";
+import { GetPokemonByUrlGateway } from "../gateway/GetPokemonByUrlGateway";
+import { PokemonController } from "../controller/PokemonController";
 
-const getPokemonListG = new getPokemonListGateway();
-const getPokemonByUrlG = new getPokemonByUrlGateway();
-const getAllPokemonUC = new getAllPokemonUseCase(
-  getPokemonListG,
-  getPokemonByUrlG
+const getPokemonListGateway = new GetPokemonListGateway();
+const getPokemonByUrlGateway = new GetPokemonByUrlGateway();
+const getAllPokemonUseCase = new GetAllPokemonUseCase(
+  getPokemonListGateway,
+  getPokemonByUrlGateway
 );
 
-export const pokemonC = new pokemonController(getAllPokemonUC);
+export const pokemonController = new PokemonController(getAllPokemonUseCase);

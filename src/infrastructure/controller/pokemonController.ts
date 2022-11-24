@@ -1,12 +1,12 @@
 import { IGetAllPokemon } from "../../domain/port/input/IGetAllPokemon";
-import allPokemonToAllPokemonResponse from "./mapper/allPokemonToAllPokemonResponseMapper";
+import AllPokemonToAllPokemonResponse from "./mapper/AllPokemonToAllPokemonResponseMapper";
 
-export class pokemonController {
+export class PokemonController {
   constructor(private readonly IGetAllPokemon: IGetAllPokemon) {
     this.getAllPokemon = this.getAllPokemon.bind(this);
   }
 
   async getAllPokemon() {
-    return allPokemonToAllPokemonResponse(await this.IGetAllPokemon.execute());
+    return AllPokemonToAllPokemonResponse(await this.IGetAllPokemon.execute());
   }
 }

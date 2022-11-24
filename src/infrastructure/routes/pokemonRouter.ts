@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { pokemonC } from "../factory/pokemonControllerFactory";
+import { pokemonController } from "../factory/PokemonControllerFactory";
 
 const pokemonRouter = Router();
 
 pokemonRouter.get("/pokemon/all", async (_req, res) => {
-  res.send(await pokemonC.getAllPokemon());
+  res.send(await pokemonController.getAllPokemon());
 });
 
 export default pokemonRouter;
