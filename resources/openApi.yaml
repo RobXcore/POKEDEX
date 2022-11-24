@@ -57,6 +57,31 @@ paths:
           description: "Response with error."
           schema:
             $ref: "#/definitions/ErrorResponse"
+            
+  /pokemon/{region}:
+    get:
+      tags:
+        - pokemon
+      description: "gets a pokemon by their region of origin"
+      operationId: "getPokemonByRegion"
+      parameters:
+        - in: path
+          required: true
+          name: region
+          type: string
+      responses:
+        "200":
+          description: "ok"
+          schema:
+            $ref: "#/definitions/Pokemon"
+        "400":
+          description: "Response with error."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Response with error."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
 definitions:
   AllPokemonResponse:
