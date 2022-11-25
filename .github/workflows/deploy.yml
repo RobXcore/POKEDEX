@@ -1,46 +1,46 @@
 # This workflow will do a clean installation of the dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
+ 
 name: "Deploy CI"
 
-env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-
+env:  
+ VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}  
+ VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+ VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+ 
 on:
-  pull_request:
-    branches:
-      - main
-      - development
-    types:
-      - closed
-
-  workflow_dispatch:
-
+ pull_request:
+  branches: 
+   - main
+   - development
+  types:
+   - closed
+    
+ workflow_dispatch:
+ 
 jobs:
-  vercel:
-    runs-on: ubuntu-latest
-    name: "Deploy application"
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: "14"
-          registry-url: https://registry.npmjs.org/
-
-      - name: "Deploy application"
-        if: github.event.pull_request.merged == true
-        run: |
-          npm install
-          npm run build
-
-          if [[ ${GITHUB_REF} == "main" ]]; then
-           echo "------------- El codigo se va a produccion ------------- "
-           npx vercel --token ${VERCEL_TOKEN} --prod
-          fi
-          if [[ ${GITHUB_REF} == "development" ]]; then
-           echo "------------- El codigo se va a preview ------------- "
-           npx vercel --token ${VERCEL_TOKEN} 
-          fi
+ vercel:
+   runs-on: ubuntu-latest
+   name: "Deploy application"
+  
+   steps:
+     - uses: actions/checkout@v2
+     - uses: actions/setup-node@v1
+       with:
+         node-version: '14'
+         registry-url: https://registry.npmjs.org/
+ 
+     - name: "Deploy application"
+       if: github.event.pull_request.merged == true
+       run: |
+         npm install
+         npm run build
+         
+         if [[ ${GITHUB_REF} == "main" ]]; then
+          echo "------------- El codigo se va a produccion ------------- "
+          npx vercel --token ${VERCEL_TOKEN} --prod
+         fi
+         if [[ ${GITHUB_REF} == "development" ]]; then
+          echo "------------- El codigo se va a preview ------------- "
+          npx vercel --token ${VERCEL_TOKEN} 
+         fi
