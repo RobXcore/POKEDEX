@@ -6,7 +6,9 @@ export class PokemonController {
     this.getAllPokemon = this.getAllPokemon.bind(this);
   }
 
-  async getAllPokemon() {
-    return AllPokemonToAllPokemonResponse(await this.IGetAllPokemon.execute());
+  async getAllPokemon(offset: number) {
+    return AllPokemonToAllPokemonResponse(
+      await this.IGetAllPokemon.execute(offset)
+    );
   }
 }

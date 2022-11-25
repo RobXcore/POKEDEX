@@ -1,5 +1,5 @@
 import { PokemonList } from "../../model/IPokemonList";
 
 export interface IGetPokemonListGateway {
-  execute(): Promise<PokemonList>;
+  execute(offset: number): Promise<PokemonList>;
 }

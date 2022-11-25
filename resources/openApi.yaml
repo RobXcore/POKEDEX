@@ -17,6 +17,12 @@ paths:
     get:
       tags:
         - pokemon
+      parameters:
+        - in: query
+          required: true
+          name: offset
+          default: 0
+          type: number
       description: "Returns all pokemon information"
       operationId: "getAllPokemon"
       responses:
@@ -82,7 +88,7 @@ paths:
           description: "Response with error."
           schema:
             $ref: "#/definitions/ErrorResponse"
-            
+
 definitions:
   AllPokemonResponse:
     type: "object"
