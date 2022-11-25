@@ -64,7 +64,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /pokemon/{region}:
+  /pokemon/region/{regionName}:
     get:
       tags:
         - pokemon
@@ -73,11 +73,36 @@ paths:
       parameters:
         - in: path
           required: true
-          name: region
+          name: regionName
           type: string
       responses:
         "200":
           description: "ok"
+          schema:
+            $ref: "#/definitions/Pokemon"
+        "400":
+          description: "Response with error."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Response with error."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+            
+  /pokemon/type/{typeName}:
+    get:
+      tags:
+        - pokemon
+      description: "Gets pokemon by their type."
+      operationId: "getPokemonByType"
+      parameters:
+        - in: path
+          required: true
+          name: typeName
+          type: string
+      responses:
+        "200":
+          description: "Ok"
           schema:
             $ref: "#/definitions/Pokemon"
         "400":
