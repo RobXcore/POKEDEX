@@ -1,7 +1,7 @@
-import { GetAllPokemonUseCase } from "../../domain/usecase/GetAllPokemonUseCase";
-import { GetPokemonListGateway } from "../gateway/GetPokemonListGateway";
+import { GetAllPokemonUseCase } from "../../domain/usecase/getAllPokemonUseCase";
+import { GetPokemonListGateway } from "../gateway/getPokemonListGateway";
 import { GetPokemonByUrlGateway } from "../gateway/GetPokemonByUrlGateway";
-import { PokemonController } from "../controller/PokemonController";
+import { PokemonController } from "../controller/pokemonController";
 
 const getPokemonListGateway = new GetPokemonListGateway();
 const getPokemonByUrlGateway = new GetPokemonByUrlGateway();
