@@ -9,8 +9,8 @@ export class GetAllPokemonUseCase implements IGetAllPokemon {
     private readonly IGetPokemonByUrl: IGetPokemonByUrlGateway
   ) {}
 
-  async execute(): Promise<Pokemon[]> {
-    const pokemonList = await this.IGetPokemonList.execute();
+  async execute(offset: number): Promise<Pokemon[]> {
+    const pokemonList = await this.IGetPokemonList.execute(offset);
 
     const allPokemon = await Promise.all(
       pokemonList.results.map(
