@@ -3,10 +3,10 @@ import { IGetPokemonListGateway } from "../../domain/port/output/IGetPokemonList
 import { PokemonListApi } from "./model/IPokemonListApi";
 
 export class GetPokemonListGateway implements IGetPokemonListGateway {
-  URL_GET_POKEMON_LIST = "https://pokeapi.co/api/v2/pokemon?limit=2000";
+  URL_GET_POKEMON_LIST = "https://pokeapi.co/api/v2/pokemon?limit=200&offset=";
 
-  async execute(): Promise<PokemonList> {
-    const responseApi = await fetch(this.URL_GET_POKEMON_LIST);
+  async execute(offset: number): Promise<PokemonList> {
+    const responseApi = await fetch(this.URL_GET_POKEMON_LIST + offset);
     const pokemonListApi = (await responseApi.json()) as PokemonListApi;
 
     const { results } = pokemonListApi;
