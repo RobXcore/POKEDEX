@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { pokemonController } from "../factory/PokemonControllerFactory";
+import { pokemonController } from "../factory/pokemonControllerFactory";
 import { MessagesToErrorResponseMapper } from "../controller/mapper/MessagesToErrorResponseMapper";
 
 const pokemonRouter = Router();

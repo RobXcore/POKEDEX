@@ -1,5 +1,5 @@
 import { IGetAllPokemon } from "../../domain/port/input/IGetAllPokemon";
-import AllPokemonToAllPokemonResponse from "./mapper/AllPokemonToAllPokemonResponseMapper";
+import AllPokemonToAllPokemonResponse from "./mapper/allPokemonToAllPokemonResponseMapper";
 
 export class PokemonController {
   constructor(private readonly IGetAllPokemon: IGetAllPokemon) {
