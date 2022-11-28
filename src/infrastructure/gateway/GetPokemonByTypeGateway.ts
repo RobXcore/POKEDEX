@@ -1,8 +1,8 @@
-import { Pokemon } from "../../domain/model/IPokemon";
 import { IGetPokemonByTypeGateway } from "../../domain/port/output/IGetPokemonByTypeGateway";
+import { TypeApi } from "./model/IPokemonTypeApi";
 
 export class GetPokemonByTypeGateway implements IGetPokemonByTypeGateway {
-    execute(type: string): Promise<Pokemon> {
+    execute(type: string | number): Promise<TypeApi> {
         throw new Error("Method not implemented.");
     }
 }
