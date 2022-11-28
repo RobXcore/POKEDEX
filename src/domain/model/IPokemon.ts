@@ -1,7 +1,7 @@
 export interface Pokemon {
 	name: string;
 	height: number;
-	weight: string;
+	weight: number;
 	types: Type[];
 	abilities: Ability[];
 	frontSprite: string;
