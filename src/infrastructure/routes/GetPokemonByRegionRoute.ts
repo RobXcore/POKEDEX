@@ -1,8 +1,11 @@
 import { Router } from "express";
-export const regionRoute = Router();
+import { GetPokemonByRegionUseCase } from "../../domain/usecase/GetPokemonByRegionUseCase";
+import { GetPokemonByRegionController } from "../controller/GetPokemonByRegionController";
+import { GetPokemonByRegionGateway } from "../gateway/GetPokemonByRegionGateway";
 
-regionRoute.get("/region/:region", async (req, res) => {
-	//routes
-	const algo = await getData(req.params["region"]);
-	res.send(algo);
-});
+const gateway = new GetPokemonByRegionGateway();
+const useCase = new GetPokemonByRegionUseCase(gateway);
+const controller = new GetPokemonByRegionController(useCase);
+const regionRoute = Router();
+regionRoute.get("/region/:region", controller.getPokemonByRegion);
+export default regionRoute;
