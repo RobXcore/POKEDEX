@@ -26,7 +26,7 @@ export class GetPokemonByRegionUseCase implements IGetPokemonByRegion {
 			mapped.map((pokemon: any) => fetch(pokemon).then((res) => res.json()))
 		);
 		console.log(response);
-		return gateRes;
+		return response;
 	}
 }
 
