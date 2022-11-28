@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { GetPokemonByRegionUseCase } from "../../domain/usecase/GetPokemonByRegionUseCase";
+import { GetPokemonByRegionUseCase } from "../../domain/usecase/getPokemonByRegionUseCase";
 import { GetPokemonByRegionController } from "../controller/GetPokemonByRegionController";
 import { GetPokemonByRegionGateway } from "../gateway/GetPokemonByRegionGateway";
 

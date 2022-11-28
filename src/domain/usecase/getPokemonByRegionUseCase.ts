@@ -21,6 +21,11 @@ export class GetPokemonByRegionUseCase implements IGetPokemonByRegion {
 			indexes[0]}}&offset=${indexes[0]}`;
 
 		const gateRes = await this.getPokemonByRegionGateway.execute(URL);
+		const mapped = await gateRes.results.map((url: any) => url.url);
+		const response = await Promise.all(
+			mapped.map((pokemon: any) => fetch(pokemon).then((res) => res.json()))
+		);
+		console.log(response);
 		return gateRes;
 	}
 }
