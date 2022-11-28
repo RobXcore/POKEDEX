@@ -1,5 +1,5 @@
-import { Ability, Pokemon, Type } from "../../../domain/model/IPokemon";
-import { AbilityApi, PokemonApi, TypeApi } from "../model/IPokemonApi";
+import { Ability, Pokemon, ShortType } from "../../../domain/model/IPokemon";
+import { AbilityApi, PokemonApi, ShortTypeApi } from "../model/IPokemonApi";
 
 const PokemonApiToPokemonMapper = (pokemonApi: PokemonApi) => {
   const { name, height, weight, types, abilities, sprites } = pokemonApi;
@@ -28,9 +28,9 @@ const abilityMapper = (abilities: AbilityApi[]) => {
   return abilitiesData;
 };
 
-const typeMapper = (types: TypeApi[]) => {
+const typeMapper = (types: ShortTypeApi[]) => {
   const typesData = types.map((dataType) => {
-    const typeObject: Type = {
+    const typeObject: ShortType = {
       name: dataType.type.name,
       url: dataType.type.url,
     };

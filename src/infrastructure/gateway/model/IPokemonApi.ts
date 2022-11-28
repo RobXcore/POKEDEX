@@ -1,11 +1,11 @@
-import { Ability, Type } from "../../../domain/model/IPokemon";
+import { Ability, ShortType } from "../../../domain/model/IPokemon";
 
 export interface PokemonApi {
   name: string;
   height: number;
   weight: number;
   frontSprite: string;
-  types: TypeApi[];
+  types: ShortTypeApi[];
   abilities: AbilityApi[];
   sprites: Sprite;
 }
@@ -18,8 +18,8 @@ export interface AbilityApi {
   slot: number;
   ability: Ability;
 }
-
-export interface TypeApi {
+//TODO: aclarar choque de nombres
+export interface ShortTypeApi {
   slot: number;
-  type: Type;
+  type: ShortType;
 }
