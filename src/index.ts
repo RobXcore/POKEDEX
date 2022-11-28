@@ -8,7 +8,7 @@ app.use(pokemonRouter);
 
 const swaggerOptions = {
   customCssUrl:
-    "https://cdn.jsdelivr.net/npm/swagger-ui-themes@3.0.0/themes/3.x/theme-flattop.css",
+    "https://cdn.jsdelivr.net/npm/swagger-ui-themes@3.0.0/themes/3.x/theme-outline.css",
 };
 app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
 
