@@ -1,5 +1,5 @@
 import { Pokemon } from "../../model/IPokemon";
 
-export interface IGetPokemonByUrlGateway {
+export interface IGetPokemonByIdGateway{
   execute(id: number): Promise<Pokemon>;
 }
