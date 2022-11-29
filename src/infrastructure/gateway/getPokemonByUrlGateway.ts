@@ -4,10 +4,10 @@ import { ApiErrorException } from "../exception/ApiErrorException";
 import PokemonApiToPokemonMapper from "./mapper/pokemonApiToPokemonMapper";
 import { PokemonApi } from "./model/IPokemonApi";
 
-export class GetPokemonByUrlGateway implements IGetPokemonByUrlGateway {
-  ERROR_MESSAGE = "La respuesta de la API fue distinta de 200: ";
-  INTERNAL_SERVER_ERROR = 500;
+let ERROR_MESSAGE = "La respuesta de la API fue distinta de 200: ";
+let INTERNAL_SERVER_ERROR = 500;
 
+export class GetPokemonByUrlGateway implements IGetPokemonByUrlGateway {
   async execute(url: string): Promise<Pokemon> {
     const responseApi = await fetch(url);
     if (responseApi.status === 200) {
@@ -15,8 +15,8 @@ export class GetPokemonByUrlGateway implements IGetPokemonByUrlGateway {
       return PokemonApiToPokemonMapper(pokemonApi);
     } else {
       throw new ApiErrorException(
-        this.ERROR_MESSAGE + responseApi.url + responseApi.status + responseApi.statusText,
-        this.INTERNAL_SERVER_ERROR
+        ERROR_MESSAGE + responseApi.url + responseApi.status + responseApi.statusText,
+        INTERNAL_SERVER_ERROR
       );
     }
   }

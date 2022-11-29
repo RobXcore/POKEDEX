@@ -3,14 +3,13 @@ import { IGetPokemonListGateway } from "../../domain/port/output/IGetPokemonList
 import { ApiErrorException } from "../exception/ApiErrorException";
 import { PokemonListApi } from "./model/IPokemonListApi";
 
+const ERROR_MESSAGE = "La respuesta de la API fallo: ";
+const INTERNAL_SERVER_ERROR = 500;
+const URL_GET_POKEMON_LIST = "https://pokeapi.co/api/v2/pokemon?limit=200&offset=";
+
 export class GetPokemonListGateway implements IGetPokemonListGateway {
-  URL_GET_POKEMON_LIST = "https://pokeapi.co/api/v2/pokemon?limit=200&offset=";
-
-  ERROR_MESSAGE = "La respuesta de la API fallo: ";
-  INTERNAL_SERVER_ERROR = 500;
-
   async execute(offset: number): Promise<PokemonList> {
-    const responseApi = await fetch(this.URL_GET_POKEMON_LIST + offset);
+    const responseApi = await fetch(URL_GET_POKEMON_LIST + offset);
 
     if (responseApi.status === 200) {
       const pokemonListApi = (await responseApi.json()) as PokemonListApi;
@@ -23,8 +22,8 @@ export class GetPokemonListGateway implements IGetPokemonListGateway {
       return pokemonList;
     } else {
       throw new ApiErrorException(
-        this.ERROR_MESSAGE + `${responseApi.url} ${responseApi.status} ${responseApi.statusText}`,
-        this.INTERNAL_SERVER_ERROR
+        ERROR_MESSAGE + `${responseApi.url} ${responseApi.status} ${responseApi.statusText}`,
+        INTERNAL_SERVER_ERROR
       );
     }
   }
