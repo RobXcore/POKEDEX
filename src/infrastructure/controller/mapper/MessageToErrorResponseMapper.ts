@@ -1,8 +1,8 @@
 import { ErrorResponse } from "../model/IErrorResponse";
 
-export const MessagesToErrorResponseMapper = (messages: string[]) => {
+export const MessageToErrorResponseMapper = (message: string) => {
   const errorMessages: ErrorResponse = {
-    messages: messages,
+    message: message,
   };
   return errorMessages;
 };
