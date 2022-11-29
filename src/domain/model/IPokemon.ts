@@ -3,9 +3,7 @@ export interface Pokemon {
 	height: number;
 	weight: number;
 }
-export type PokemonArr = {
-	pokemon: Pokemon[];
-};
+
 export interface NameUrl {
 	name: string;
 	url: string;
