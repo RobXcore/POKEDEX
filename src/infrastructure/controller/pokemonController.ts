@@ -5,7 +5,7 @@ import AllPokemonToAllPokemonResponse from "./mapper/allPokemonToAllPokemonRespo
 
 export class PokemonController {
   BAD_REQUEST = 400;
-  ERROR_OFFSET = "El offset enviado no es numerico";
+  ERROR_OFFSET = "El offset enviado no es numérico";
 
   constructor(private readonly IGetAllPokemon: IGetAllPokemon) {
     this.getAllPokemon = this.getAllPokemon.bind(this);
