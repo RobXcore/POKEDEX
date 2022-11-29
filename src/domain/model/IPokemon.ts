@@ -2,6 +2,9 @@ export interface Pokemon {
 	name: string;
 	height: number;
 	weight: number;
+	types: Type[];
+	abilities: Ability[];
+	frontSprite: string;
 }
 
 export interface NameUrl {

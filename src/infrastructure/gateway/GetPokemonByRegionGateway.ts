@@ -1,7 +1,8 @@
+import { PokemonList } from "../../domain/model/IPokemonList";
 import { IGetPokemonByRegionGateway } from "../../domain/port/output/IGetPokemonByRegionGateway";
 
 export class GetPokemonByRegionGateway implements IGetPokemonByRegionGateway {
-	async execute (limit: number, offset: number): Promise<any> {
+	async execute (limit: number, offset: number): Promise<PokemonList> {
 		const POKEMON_URL = `https://pokeapi.co/api/v2/pokemon/?limit=${limit -
 			offset}}&offset=${offset}`;
 		const response = await fetch(POKEMON_URL);
