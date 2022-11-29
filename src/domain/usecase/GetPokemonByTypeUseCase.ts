@@ -1,5 +1,5 @@
 import { TypeApi } from "../../infrastructure/gateway/model/IPokemonTypeApi";
-import { Pokemon } from "../model/IPokemon";
+import { Pokemon, NameUrl } from "../model/IPokemon";
 import { IGetPokemonByType } from "../port/input/IGetPokemonByType";
 import { IGetPokemonTypeGateway as IGetPokemonTypeGateway } from "../port/output/IGetPokemonTypeGateway";
 import { IGetPokemonByUrlGateway } from "../port/output/IGetPokemonByUrlGateway";
@@ -11,10 +11,12 @@ export class GetPokemonByTypeUseCase implements IGetPokemonByType {
   ) {}
 
   async execute(type: string | number): Promise<Pokemon[]> {
-    const pokemonType:TypeApi = await this.IGetPokemonTypeGateway.execute(type);
-    const typePokemon:Pokemon[] = await Promise.all(
+    const pokemonType: TypeApi = await this.IGetPokemonTypeGateway.execute(
+      type
+    );
+    const typePokemon: Pokemon[] = await Promise.all(
       pokemonType.pokemon.map(
-        async (pokemon) =>
+        async (pokemon: NameUrl) =>
           await this.IGetPokemonByUrlGateway.execute(pokemon.url)
       )
     );
