@@ -1,3 +1,3 @@
 export interface IGetPokemonByRegionGateway {
-	execute(url: string): Promise<any>;
+	execute(limit: number, offset: number): Promise<any>;
 }

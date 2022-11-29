@@ -1,9 +1,13 @@
 import { Pokemon } from "../model/IPokemon";
 import { IGetPokemonByRegion } from "../port/input/IGetPokemonByRegion";
+import { IGetAllPokemonByRegionGateway } from "../port/output/IGetAllPokemonByRegion";
 import { IGetPokemonByRegionGateway } from "../port/output/IGetPokemonByRegionGateway";
 
 export class GetPokemonByRegionUseCase implements IGetPokemonByRegion {
-	constructor (private readonly getPokemonByRegionGateway: IGetPokemonByRegionGateway) {}
+	constructor (
+		private readonly getPokemonByRegionGateway: IGetPokemonByRegionGateway,
+		private readonly getAllPokemonByRegionGateway: IGetAllPokemonByRegionGateway
+	) {}
 	async execute (region: string): Promise<Pokemon[]> {
 		const regions = {
 			//UseCase?
@@ -17,18 +21,10 @@ export class GetPokemonByRegionUseCase implements IGetPokemonByRegion {
 			galar: [ 809, 898 ]
 		};
 		const indexes = regions[region as keyof typeof regions];
-		const URL = `https://pokeapi.co/api/v2/pokemon/?limit=${indexes[1] -
-			indexes[0]}}&offset=${indexes[0]}`;
+		const limit = indexes[1] - indexes[0];
+		const offset = indexes[0];
 
-		const gateRes = await this.getPokemonByRegionGateway.execute(URL);
-		const mapped = await gateRes.results.map((url: any) => url.url);
-		const response = await Promise.all(
-			mapped.map((pokemon: any) => fetch(pokemon).then((res) => res.json()))
-		);
-		console.log(response);
-		return response;
+		const results = await this.getPokemonByRegionGateway.execute(limit, offset);
+		return await this.getAllPokemonByRegionGateway.execute(results);
 	}
 }
-
-//logica de negocios, codigo arbitrario VA ACA
-//el caso de uso llama a los puertos de salida, no al gateway, los puertos son puntos de conexion entre dominio e infraestructu

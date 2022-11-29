@@ -1,12 +1,15 @@
 import { IGetPokemonByRegionGateway } from "../../domain/port/output/IGetPokemonByRegionGateway";
-import PokemonApiToPokemonMapper from "../mapper/PokemonApiToPokemonMapper";
-import { PokemonApi } from "../model/IPokemonApi";
 
 export class GetPokemonByRegionGateway implements IGetPokemonByRegionGateway {
-	constructor () {}
-	async execute (url: string): Promise<PokemonApi> {
-		const response = await fetch(url);
+	async execute (limit: number, offset: number): Promise<any> {
+		const POKEMON_URL = `https://pokeapi.co/api/v2/pokemon/?limit=${limit -
+			offset}}&offset=${offset}`;
+		const response = await fetch(POKEMON_URL);
 		const data = await response.json();
-		return PokemonApiToPokemonMapper(data);
+		return data;
 	}
 }
+
+//	const mapped = await gateRes.results.map((url: any) => url.url);
+//const response = await Promise.all(
+//mapped.map((pokemon: any) => fetch(pokemon).then((res) => res.json()))
