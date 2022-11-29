@@ -21,4 +21,8 @@ pokemonRouter.get("/pokemon/all", async (req, res) => {
   }
 });
 
+pokemonRouter.get("/pokemon/type/:type", async (req, res) => {
+  res.send(await pokemonController.getPokemonByType(req.params.type));
+});
+
 export default pokemonRouter;
