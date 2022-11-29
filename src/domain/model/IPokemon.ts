@@ -14,4 +14,11 @@ export interface NameUrl {
 
 export interface Type extends NameUrl {}
 
+export interface TypeApi {
+	slot: number;
+	type: Type;
+}
+export interface AbilityApi {
+	ability: Ability;
+}
 export interface Ability extends NameUrl {}
