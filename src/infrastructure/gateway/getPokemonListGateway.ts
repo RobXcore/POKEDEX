@@ -2,6 +2,7 @@ import { PokemonList } from "../../domain/model/IPokemonList";
 import { IGetPokemonListGateway } from "../../domain/port/output/IGetPokemonListGateway";
 import { PokemonListApi } from "./model/IPokemonListApi";
 
+// TODO: nombre + apropiado sería GetAllPokemonListGateway
 export class GetPokemonListGateway implements IGetPokemonListGateway {
   URL_GET_POKEMON_LIST = "https://pokeapi.co/api/v2/pokemon?limit=200&offset=";
 
