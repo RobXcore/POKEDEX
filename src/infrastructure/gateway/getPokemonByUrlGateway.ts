@@ -4,8 +4,8 @@ import { ApiErrorException } from "../exception/ApiErrorException";
 import PokemonApiToPokemonMapper from "./mapper/pokemonApiToPokemonMapper";
 import { PokemonApi } from "./model/IPokemonApi";
 
-let ERROR_MESSAGE = "La respuesta de la API fue distinta de 200: ";
-let INTERNAL_SERVER_ERROR = 500;
+const ERROR_MESSAGE = "La respuesta de la API fue distinta de 200: ";
+const INTERNAL_SERVER_ERROR = 500;
 
 export class GetPokemonByUrlGateway implements IGetPokemonByUrlGateway {
   async execute(url: string): Promise<Pokemon> {
