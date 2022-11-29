@@ -4,8 +4,10 @@ import { RequestParamException } from "../exception/RequstParamException";
 import AllPokemonToAllPokemonResponse from "./mapper/allPokemonToAllPokemonResponseMapper";
 import { IGetPokemonByType } from "../../domain/port/input/IGetPokemonByType";
 
-const BAD_REQUEST = 400;
-const ERROR_OFFSET = "El offset enviado no es numérico";
+const BAD_REQUEST_STATUS_CODE = 400;
+const INVALID_OFFSET_ERROR_MESSAGE = "El offset enviado no es numérico";
+const MISSING_TYPE_IN_PATH_ERROR_MESSAGE =
+  "Debe indicarse en el path un nombre de tipo en inglés o algún número entero como id.";
 
 export class PokemonController {
   constructor(
@@ -19,20 +21,37 @@ export class PokemonController {
   async getAllPokemon(req: Request, res: Response): Promise<void> {
     let requestOffset;
 
-    if (!req.query.offset) {
-      requestOffset = 0;
-    } else {
-      requestOffset = +req.query.offset;
-    }
+    !req.query.offset ? requestOffset = 0 : requestOffset = +req.query.offset;
 
     if (isNaN(requestOffset)) {
-      throw new RequestParamException(ERROR_OFFSET, BAD_REQUEST);
+      throw new RequestParamException(
+        INVALID_OFFSET_ERROR_MESSAGE,
+        BAD_REQUEST_STATUS_CODE
+      );
     } else {
-      res.send(AllPokemonToAllPokemonResponse(await this.IGetAllPokemon.execute(requestOffset)));
+      res.send(
+        AllPokemonToAllPokemonResponse(
+          await this.IGetAllPokemon.execute(requestOffset)
+        )
+      );
     }
   }
 
-  async getPokemonByType(type: string | number) {
-    await this.IGetPokemonByType.execute(type);
+  async getPokemonByType(req: Request, res: Response): Promise<void> {
+    let typeNameOrId: string;
+
+    if (!req.params.type) {
+      throw new RequestParamException(
+        MISSING_TYPE_IN_PATH_ERROR_MESSAGE,
+        BAD_REQUEST_STATUS_CODE
+      );
+    } else {
+      typeNameOrId = req.params.type;
+    }
+    //TODO: añadir validación para typeNameOrId
+    res.send(
+      //TODO: añadir conversión con mapper
+      await this.IGetPokemonByType.execute(typeNameOrId)
+    );
   }
 }
