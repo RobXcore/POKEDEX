@@ -8,6 +8,8 @@ const BAD_REQUEST_STATUS_CODE = 400;
 const INVALID_OFFSET_ERROR_MESSAGE = "El offset enviado no es numérico";
 const MISSING_TYPE_IN_PATH_ERROR_MESSAGE =
   "Debe indicarse en el path un nombre de tipo en inglés o algún número entero como id.";
+const INVALID_TYPE_ID_IN_PATH_ERROR_MESSAGE =
+  "Si elige buscar por id del tipo, éste número entero debe encontrarse entre 1 y 20 inclusive.";
 
 export class PokemonController {
   constructor(
@@ -21,7 +23,9 @@ export class PokemonController {
   async getAllPokemon(req: Request, res: Response): Promise<void> {
     let requestOffset;
 
-    !req.query.offset ? requestOffset = 0 : requestOffset = +req.query.offset;
+    !req.query.offset
+      ? (requestOffset = 0)
+      : (requestOffset = +req.query.offset);
 
     if (isNaN(requestOffset)) {
       throw new RequestParamException(
@@ -38,6 +42,7 @@ export class PokemonController {
   }
 
   async getPokemonByType(req: Request, res: Response): Promise<void> {
+    const NUMBER_OF_POKEMON_TYPES = 20;
     let typeNameOrId: string;
 
     if (!req.params.type) {
@@ -46,12 +51,24 @@ export class PokemonController {
         BAD_REQUEST_STATUS_CODE
       );
     } else {
-      typeNameOrId = req.params.type;
+      typeNameOrId = req.params.type.trim();
     }
-    //TODO: añadir validación para typeNameOrId
-    res.send(
-      //TODO: añadir conversión con mapper
-      await this.IGetPokemonByType.execute(typeNameOrId)
-    );
+
+    //Verifica si el valor ingresado son letras o un número entre 0 y 20
+    if (
+      isNaN(+typeNameOrId) ||
+      +typeNameOrId >= 1 ||
+      +typeNameOrId <= NUMBER_OF_POKEMON_TYPES
+    ) {
+      res.send(
+        //TODO: añadir conversión con mapper
+        await this.IGetPokemonByType.execute(typeNameOrId)
+      );
+    } else {
+      throw new RequestParamException(
+        INVALID_TYPE_ID_IN_PATH_ERROR_MESSAGE,
+        BAD_REQUEST_STATUS_CODE
+      );
+    }
   }
 }
