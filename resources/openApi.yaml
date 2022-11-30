@@ -89,22 +89,22 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
             
-  /pokemon/type/{typeName}:
+  /pokemon/type/{typeNameOrId}:
     get:
       tags:
         - pokemon
-      description: "Gets pokemon by their type."
+      description: "Gets pokemon by their type name or id."
       operationId: "getPokemonByType"
       parameters:
         - in: path
           required: true
-          name: typeName
+          name: typeNameOrId
           type: string
       responses:
         "200":
           description: "Ok"
           schema:
-            $ref: "#/definitions/Pokemon"
+            $ref: "#/definitions/PokemonByTypeResponse"
         "400":
           description: "Response with error."
           schema:
@@ -121,6 +121,22 @@ definitions:
       - "allPokemon"
     properties:
       allPokemon:
+        type: "array"
+        items:
+          $ref: "#/definitions/Pokemon"
+  
+  PokemonByTypeResponse:
+    type: "object"
+    required:
+      - type
+      - pokemon
+    properties:
+      count:
+        type: number
+        example: 1
+      type:
+        $ref: "#/definitions/PokemonTypeSummary"
+      pokemon:
         type: "array"
         items:
           $ref: "#/definitions/Pokemon"
@@ -146,6 +162,19 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/NameUrl"
+          
+  PokemonTypeSummary:
+    type: "object"
+    required:
+      - name
+      - id
+    properties:
+      id:
+        type: number
+        example: 2
+      name:
+        type: string
+        example: "fighting"
 
   NameUrl:
     type: "object"
