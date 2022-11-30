@@ -10,9 +10,9 @@ export class GetPokemonByTypeUseCase implements IGetPokemonByType {
     private readonly IGetPokemonByUrlGateway: IGetPokemonByUrlGateway
   ) {}
 
-  async execute(type: string | number): Promise<Pokemon[]> {
+  async execute(typeNameOrId: string): Promise<Pokemon[]> {
     const pokemonType: TypeApi = await this.IGetPokemonTypeGateway.execute(
-      type
+      typeNameOrId
     );
     const typePokemon: Pokemon[] = await Promise.all(
       pokemonType.pokemon.map(
