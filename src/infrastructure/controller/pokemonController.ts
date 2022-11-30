@@ -3,6 +3,7 @@ import { IGetAllPokemon } from "../../domain/port/input/IGetAllPokemon";
 import { RequestParamException } from "../exception/RequstParamException";
 import AllPokemonToAllPokemonResponse from "./mapper/allPokemonToAllPokemonResponseMapper";
 import { IGetPokemonByType } from "../../domain/port/input/IGetPokemonByType";
+import PokemonListToPokemonByTypeResponse from "./mapper/PokemonListToPokemonByTypeResponseMapper";
 
 const BAD_REQUEST_STATUS_CODE = 400;
 const INVALID_OFFSET_ERROR_MESSAGE = "El offset enviado no es numérico";
@@ -61,8 +62,9 @@ export class PokemonController {
       +typeNameOrId <= NUMBER_OF_POKEMON_TYPES
     ) {
       res.send(
-        //TODO: añadir conversión con mapper
-        await this.IGetPokemonByType.execute(typeNameOrId)
+        PokemonListToPokemonByTypeResponse(
+          await this.IGetPokemonByType.execute(typeNameOrId)
+        )
       );
     } else {
       throw new RequestParamException(
