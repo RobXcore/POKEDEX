@@ -6,15 +6,16 @@ import { IGetPokemonListGateway } from "../port/output/IGetPokemonListGateway";
 export class GetAllPokemonUseCase implements IGetAllPokemon {
   constructor(
     private readonly IGetPokemonList: IGetPokemonListGateway,
-    private readonly IGetPokemonByUrl: IGetPokemonByUrlGateway
+    private readonly IGetPokemonByUrlGateway: IGetPokemonByUrlGateway
   ) {}
 
-  async execute(): Promise<Pokemon[]> {
-    const pokemonList = await this.IGetPokemonList.execute();
+  async execute(offset: number): Promise<Pokemon[]> {
+    const pokemonList = await this.IGetPokemonList.execute(offset);
 
     const allPokemon = await Promise.all(
       pokemonList.results.map(
-        async (pokemon) => await this.IGetPokemonByUrl.execute(pokemon.url)
+        async (pokemon) =>
+          await this.IGetPokemonByUrlGateway.execute(pokemon.url)
       )
     );
 
