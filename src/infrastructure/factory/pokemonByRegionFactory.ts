@@ -7,7 +7,5 @@ import { GetPokemonByRegionGateway } from "../gateway/GetPokemonByRegionGateway"
 const gateway = new GetPokemonByRegionGateway();
 const allGateway = new GetAllPokemonByRegionGateway();
 const useCase = new GetPokemonByRegionUseCase(gateway, allGateway);
-const controller = new GetPokemonByRegionController(useCase);
-const regionRoute = Router();
-regionRoute.get("/region/:region", controller.getPokemonByRegionController);
-export default regionRoute;
+export const controller = new GetPokemonByRegionController(useCase);
+export const regionRoute = Router();

@@ -2,7 +2,7 @@ import express from "express";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./resources/swagger.json";
 import pokemonRouter from "./infrastructure/routes/pokemonRouter";
-import regionRoute from "./infrastructure/routes/GetPokemonByRegionRoute";
+import { regionRoute } from "./infrastructure/factory/pokemonByRegionFactory";
 
 const app = express();
 app.use(regionRoute);

@@ -1,4 +1,4 @@
-import { Type, Ability } from "../../../domain/model/IPokemon";
+import { Type, Ability, NameUrl } from "../../../domain/model/IPokemon";
 
 export interface TypeApi {
 	slot: number;
@@ -6,4 +6,8 @@ export interface TypeApi {
 }
 export interface AbilityApi {
 	ability: Ability;
+}
+
+export interface ResultsApi {
+	results: NameUrl[];
 }

@@ -1,3 +1,6 @@
+import { ResultsApi } from "../../../infrastructure/controller/model/IPokemonByRegionApi";
+import { Pokemon } from "../../model/IPokemon";
+
 export interface IGetAllPokemonByRegionGateway {
-	execute(results: any): Promise<any>;
+	execute(results: ResultsApi): Promise<Pokemon[]>;
 }
