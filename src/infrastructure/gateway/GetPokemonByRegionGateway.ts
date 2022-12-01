@@ -3,10 +3,10 @@ import { IGetPokemonByRegionGateway } from "../../domain/port/output/IGetPokemon
 
 export class GetPokemonByRegionGateway implements IGetPokemonByRegionGateway {
 	async execute (limit: number, offset: number): Promise<PokemonList> {
-		const POKEMON_URL = `https://pokeapi.co/api/v2/pokemon/?limit=${limit -
-			offset}}&offset=${offset}`;
+		const POKEMON_URL = `https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`;
 		const response = await fetch(POKEMON_URL);
 		const data = await response.json();
+		console.log(POKEMON_URL);
 		return data;
 	}
 }

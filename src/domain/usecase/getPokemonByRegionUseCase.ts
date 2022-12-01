@@ -10,7 +10,6 @@ export class GetPokemonByRegionUseCase implements IGetPokemonByRegion {
 	) {}
 	async execute (region: string): Promise<Pokemon[]> {
 		const regions = {
-			//UseCase?
 			kanto: [ 0, 151 ],
 			johto: [ 151, 251 ],
 			hoenn: [ 251, 386 ],

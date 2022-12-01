@@ -1,4 +1,5 @@
-import { Ability, AbilityApi, Pokemon, Type, TypeApi } from "../../domain/model/IPokemon";
+import { TypeApi, AbilityApi } from "../gateway/model/IPokemonApi";
+import { Ability, Pokemon, Type } from "../../domain/model/IPokemon";
 
 const PokemonApiToPokemonMapper = (json: any) => {
 	const pokemon: Pokemon = {
@@ -14,10 +15,6 @@ const PokemonApiToPokemonMapper = (json: any) => {
 };
 
 const TypeMapper = (types: TypeApi[]) => {
-	/*types = [
-		{slot:1, type:{name:'name', url:'url',
-		{slot:2, type:{name:'name', url:'url'}
-	]*/
 	const typeData = types.map((dataType) => {
 		const typeObject: Type = {
 			name: dataType.type.name,
@@ -30,11 +27,6 @@ const TypeMapper = (types: TypeApi[]) => {
 };
 
 const AbilityMapper = (abilities: AbilityApi[]) => {
-	/*
-	abilities = [
-		{ability:{name:'name', url:'url'}}
-	]
-	*/
 	const abilityData = abilities.map((abilityType) => {
 		const abilityObject: Ability = {
 			name: abilityType.ability.name,
