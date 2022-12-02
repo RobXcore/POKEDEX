@@ -10,8 +10,8 @@ const BAD_REQUEST_STATUS_CODE = 400;
 const INVALID_OFFSET_ERROR_MESSAGE = "El offset enviado no es numérico";
 const INVALID_ID_ERROR_MESSAGE = "El id ingresado no es válido";
 const MISSING_TYPE_IN_PATH_ERROR_MESSAGE =
-  "Debe indicarse en el path un nombre de tipo en inglés o algún número entero como id.";
-  
+  "Debe indicarse en el path un nombre de tipo en inglés o algún número entero como id entre 1 y 18 inclusive.";
+
 export class PokemonController {
   constructor(
     private readonly IGetAllPokemon: IGetAllPokemon,
@@ -48,7 +48,10 @@ export class PokemonController {
     const id = Number(req.params.id);
 
     if (isNaN(id)) {
-      throw new RequestParamException(INVALID_ID_ERROR_MESSAGE, BAD_REQUEST_STATUS_CODE);
+      throw new RequestParamException(
+        INVALID_ID_ERROR_MESSAGE,
+        BAD_REQUEST_STATUS_CODE
+      );
     } else {
       res.send(await this.IGetPokemonById.execute(id));
     }
@@ -57,19 +60,18 @@ export class PokemonController {
   async getPokemonByType(req: Request, res: Response): Promise<void> {
     let typeNameOrId: string;
 
-    if (!req.params.type) {
+    if (!req.params.type || req.params.type.trim() === "") {
       throw new RequestParamException(
         MISSING_TYPE_IN_PATH_ERROR_MESSAGE,
         BAD_REQUEST_STATUS_CODE
       );
     } else {
       typeNameOrId = req.params.type.trim();
+      res.send(
+        PokemonListToPokemonByTypeResponse(
+          await this.IGetPokemonByType.execute(typeNameOrId)
+        )
+      );
     }
-
-    res.send(
-      PokemonListToPokemonByTypeResponse(
-        await this.IGetPokemonByType.execute(typeNameOrId)
-      )
-    );
   }
 }
