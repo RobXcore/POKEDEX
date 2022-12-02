@@ -5,7 +5,7 @@ import { PokemonListApi } from "./model/IPokemonListApi";
 import FetchClientUtil from "./util/FetchClientUtil";
 
 const URL_GET_POKEMON_LIST = "https://pokeapi.co/api/v2/pokemon?limit=200&offset=";
-// TODO: nombre + apropiado sería GetAllPokemonListGateway
+
 export class GetPokemonListGateway implements IGetPokemonListGateway {
   async execute(offset: number): Promise<PokemonList> {
     const responseApi = await FetchClientUtil.get(URL_GET_POKEMON_LIST + offset);
