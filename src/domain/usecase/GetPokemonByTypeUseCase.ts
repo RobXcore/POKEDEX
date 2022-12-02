@@ -1,5 +1,5 @@
 import { TypeApi } from "../../infrastructure/gateway/model/IPokemonTypeApi";
-import { Pokemon, NameUrl } from "../model/IPokemon";
+import { Pokemon } from "../model/IPokemon";
 import { IGetPokemonByType } from "../port/input/IGetPokemonByType";
 import { IGetPokemonTypeGateway as IGetPokemonTypeGateway } from "../port/output/IGetPokemonTypeGateway";
 import { IGetPokemonByUrlGateway } from "../port/output/IGetPokemonByUrlGateway";
@@ -17,8 +17,9 @@ export class GetPokemonByTypeUseCase implements IGetPokemonByType {
   ) {}
 
   async execute(typeNameOrId: string): Promise<Pokemon[]> {
-    //Verifica si el valor recibido son letras o un número entre 0 y 20
+    //TODO: llevar lógica de verificar parámetros al controller
     if (
+      //Verifica si el valor recibido son letras o un número entre 0 y 20
       isNaN(+typeNameOrId) ||
       +typeNameOrId >= 1 ||
       +typeNameOrId <= NUMBER_OF_POKEMON_TYPES
@@ -26,10 +27,10 @@ export class GetPokemonByTypeUseCase implements IGetPokemonByType {
       const pokemonType: TypeApi = await this.IGetPokemonTypeGateway.execute(
         typeNameOrId
       );
+
       const typePokemon: Pokemon[] = await Promise.all(
-        pokemonType.pokemon.map(
-          async (pokemon: NameUrl) =>
-            await this.IGetPokemonByUrlGateway.execute(pokemon.url)
+        pokemonType.pokemonList.map(
+          async (pokemonObject) => await this.IGetPokemonByUrlGateway.execute(pokemonObject.pokemon.url)
         )
       );
       return typePokemon;
