@@ -18,7 +18,7 @@ export interface AbilityApi {
   slot: number;
   ability: Ability;
 }
-//TODO: aclarar choque de nombres
+
 export interface ShortTypeApi {
   slot: number;
   type: ShortType;
