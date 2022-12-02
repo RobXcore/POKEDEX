@@ -1,5 +1,4 @@
 #!/bin/sh
-chmod +x .git/hooks/pre-commit
 npm install
 
 echo "---------------------------Build---------------------------"
@@ -13,3 +12,5 @@ else
         echo "Build Failed"
 	      exit 1
 fi
+
+echo "---------------------------Test---------------------------"
