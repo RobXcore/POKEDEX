@@ -27,6 +27,7 @@
         "parameters": [
           {
             "in": "query",
+            "required": true,
             "name": "offset",
             "default": 0,
             "type": "number"
@@ -93,7 +94,7 @@
         }
       }
     },
-    "/pokemon/region/{region}": {
+    "/pokemon/region/{regionName}": {
       "get": {
         "tags": [
           "pokemon"
@@ -104,7 +105,7 @@
           {
             "in": "path",
             "required": true,
-            "name": "region",
+            "name": "regionName",
             "type": "string"
           }
         ],
@@ -129,6 +130,49 @@
           }
         }
       }
+    },
+    "/pokemon/type/{typeNameOrId}": {
+      "get": {
+        "tags": [
+          "pokemon"
+        ],
+        "description": "Gets pokemon by their type name or id.",
+        "operationId": "getPokemonByType",
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "name": "typeNameOrId",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/PokemonByTypeResponse"
+            }
+          },
+          "400": {
+            "description": "Response with error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Response with error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Response with error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -139,6 +183,25 @@
       ],
       "properties": {
         "allPokemon": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Pokemon"
+          }
+        }
+      }
+    },
+    "PokemonByTypeResponse": {
+      "type": "object",
+      "required": [
+        "count",
+        "pokemon"
+      ],
+      "properties": {
+        "count": {
+          "type": "number",
+          "example": 1
+        },
+        "pokemon": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Pokemon"
@@ -199,15 +262,9 @@
         "message"
       ],
       "properties": {
-        "messages": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "example": [
-            "foo",
-            "bar"
-          ]
+        "message": {
+          "type": "string",
+          "example": "Este es un mensaje de error personalizado."
         }
       }
     }
