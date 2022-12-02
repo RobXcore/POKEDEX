@@ -3,12 +3,9 @@ import { IGetPokemonById } from "../port/input/IGetPokemonById";
 import { IGetPokemonByIdGateway } from "../port/output/IGetPokemonByIdGateway";
 
 export class GetPokemonByIdUseCase implements IGetPokemonById {
-  constructor(
-    private readonly IGetPokemonById: IGetPokemonByIdGateway
-  ) {}
+  constructor(private readonly IGetPokemonById: IGetPokemonByIdGateway) {}
 
-  async execute(id:number): Promise<Pokemon> {
-    const pokemon = await this.IGetPokemonById.execute(id);
-    return pokemon;
+  async execute(id: number): Promise<Pokemon> {
+    return await this.IGetPokemonById.execute(id);
   }
 }
