@@ -1,6 +1,6 @@
 import { Pokemon } from "../model/IPokemon";
 import { IGetPokemonByRegion } from "../port/input/IGetPokemonByRegion";
-import { IGetAllPokemonByRegionGateway } from "../port/output/IGetAllPokemonByRegion";
+import { IGetAllPokemonByRegionGateway } from "../port/output/IGetAllPokemonByRegionGateway";
 import { IGetPokemonByRegionGateway } from "../port/output/IGetPokemonByRegionGateway";
 
 export class GetPokemonByRegionUseCase implements IGetPokemonByRegion {
