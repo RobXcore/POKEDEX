@@ -111,7 +111,7 @@
 		"dev": " npm run pre-commit && nodemon src/index.ts",
 		"build": "npm run pre-commit && tsc -p ./",
 		"test": "npm run pre-commit && echo \"Error: no test specified\" && exit 1",
-		"pre-commit": "cp pre-commit .git/hooks/pre-commit"
+		"pre-commit": "cp pre-commit .git/hooks/pre-commit && chmod 775 .git/hooks/pre-commit"
 	},
 	"keywords": [],
 	"author": "",
