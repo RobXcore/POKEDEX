@@ -1,4 +1,4 @@
-chmod +x .git/hooks/pre-commit
+chmod ug+x .git/hooks/*
 npm install
 
 echo "---------------------------Build---------------------------"
