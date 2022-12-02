@@ -6,7 +6,7 @@ import pokemonRouter from "./infrastructure/routes/pokemonRouter";
 const app = express();
 app.use(pokemonRouter);
 
-app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 /*Decirle a express que inicialize el servidor en el puerto 5000 y que responda con un 
 mensaje si todo sale bien*/

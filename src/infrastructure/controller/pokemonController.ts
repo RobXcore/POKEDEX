@@ -6,6 +6,7 @@ import AllPokemonToAllPokemonResponse from "./mapper/allPokemonToAllPokemonRespo
 
 const BAD_REQUEST = 400;
 const ERROR_OFFSET = "El offset enviado no es numérico";
+const ERROR_ID_NOT_VALID = "El id ingresado no es válido"
 
 export class PokemonController {
   constructor(private readonly IGetAllPokemon: IGetAllPokemon, private readonly IGetPokemonById: IGetPokemonById ) {
@@ -30,8 +31,12 @@ export class PokemonController {
   }
 
   async getPokemonById(req: Request, res: Response): Promise<void> {
-    const {id} = req.params;
-    res.send((await this.IGetPokemonById.execute(Number(id))));
-    
+    const id = Number(req.params.id);
+
+    if (isNaN(id)) {
+      throw new RequestParamException(ERROR_ID_NOT_VALID, BAD_REQUEST);
+    } else {
+    res.send((await this.IGetPokemonById.execute(id)));
+    }   
   }
 }
