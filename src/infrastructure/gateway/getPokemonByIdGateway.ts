@@ -10,7 +10,7 @@ export class GetPokemonByIdGateway implements IGetPokemonByIdGateway {
 
     async execute(id: number): Promise<Pokemon> {
       const responseApi = await FetchClientUtil.get(this.URL_GET_POKEMON+id);
-      const pokemonApi = (await responseApi.json()) as PokemonApi;
+      const pokemonApi = responseApi as PokemonApi;
   
       return PokemonApiToPokemonMapper(pokemonApi);
     }
