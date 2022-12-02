@@ -29,7 +29,9 @@ export class PokemonController {
     }
   }
 
-  async getPokemonById(id : number) {
-    return await this.IGetPokemonById.execute(id);
+  async getPokemonById(req: Request, res: Response): Promise<void> {
+    const {id} = req.params;
+    res.send((await this.IGetPokemonById.execute(Number(id))));
+    
   }
 }
