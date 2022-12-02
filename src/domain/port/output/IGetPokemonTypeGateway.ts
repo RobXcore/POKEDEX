@@ -1,5 +1,5 @@
-import { TypeApi } from '../../../infrastructure/gateway/model/IPokemonTypeApi';
+import { PokemonType } from '../../model/IPokemonType';
 
 export interface IGetPokemonTypeGateway {
-    execute(typeNameOrId: string): Promise<TypeApi>;
+    execute(typeNameOrId: string): Promise<PokemonType>;
 }
