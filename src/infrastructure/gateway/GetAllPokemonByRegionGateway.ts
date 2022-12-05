@@ -7,10 +7,10 @@ import FetchClientUtil from "./util/FetchClientUtil";
 
 export class GetAllPokemonByRegionGateway implements IGetAllPokemonByRegionGateway {
 	constructor () {}
-	async execute (data: string[]): Promise<Pokemon[]> {
-		const urlArray = await Promise.all(data.map((url: string) => FetchClientUtil.get(url)));
-		const individualMappedPokemon = urlArray.map((item: PokemonApi) =>
-			PokemonApiToPokemonMapper(item)
+	async execute (urlList: string[]): Promise<Pokemon[]> {
+		const urlArray = await Promise.all(urlList.map((url: string) => FetchClientUtil.get(url)));
+		const individualMappedPokemon = urlArray.map((url: PokemonApi) =>
+			PokemonApiToPokemonMapper(url)
 		);
 		return individualMappedPokemon;
 	}
