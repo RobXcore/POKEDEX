@@ -2,7 +2,7 @@ export interface Pokemon {
 	name: string;
 	height: number;
 	weight: number;
-	types: Type[];
+	types: ShortType[];
 	abilities: Ability[];
 	frontSprite: string;
 }
@@ -12,6 +12,6 @@ export interface NameUrl {
 	url: string;
 }
 
-export interface Type extends NameUrl {}
+export interface ShortType extends NameUrl {}
 
 export interface Ability extends NameUrl {}

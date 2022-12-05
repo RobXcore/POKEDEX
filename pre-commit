@@ -1,0 +1,16 @@
+#!/bin/sh
+npm install
+
+echo "---------------------------Build---------------------------"
+npm run build
+statusClean=$?
+
+if [[ $statusClean == 0 ]]
+then
+        echo "Build Success"
+else
+        echo "Build Failed"
+	      exit 1
+fi
+
+echo "---------------------------Test---------------------------"
