@@ -8,4 +8,6 @@ pokemonRouter.get("/pokemon/all", Handler(pokemonController.getAllPokemon));
 
 pokemonRouter.get("/pokemon/:id", Handler(pokemonController.getPokemonById));
 
+pokemonRouter.get("/pokemon/type/:type", Handler(pokemonController.getPokemonByType));
+
 export default pokemonRouter;
