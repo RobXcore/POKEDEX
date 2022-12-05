@@ -24,8 +24,8 @@ export class GetPokemonByRegionUseCase implements IGetPokemonByRegion {
 		const limit = indexes[1] - indexes[0];
 		const offset = indexes[0];
 
-		const data = await this.getPokemonByRegionGateway.execute(limit, offset);
-		const results = data.results.map(({ url }: NameUrl) => url);
-		return await this.getAllPokemonByRegionGateway.execute(results);
+		const pokemonListNameUrl = await this.getPokemonByRegionGateway.execute(limit, offset);
+		const urlArray = pokemonListNameUrl.results.map(({ url }: NameUrl) => url);
+		return await this.getAllPokemonByRegionGateway.execute(urlArray);
 	}
 }
