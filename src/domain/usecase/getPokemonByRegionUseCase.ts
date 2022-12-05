@@ -1,4 +1,4 @@
-import { Pokemon } from "../model/IPokemon";
+import { NameUrl, Pokemon } from "../model/IPokemon";
 import { IGetPokemonByRegion } from "../port/input/IGetPokemonByRegion";
 import { IGetAllPokemonByRegionGateway } from "../port/output/IGetAllPokemonByRegionGateway";
 import { IGetPokemonByRegionGateway } from "../port/output/IGetPokemonByRegionGateway";
@@ -19,11 +19,13 @@ export class GetPokemonByRegionUseCase implements IGetPokemonByRegion {
 			alola: [ 721, 809 ],
 			galar: [ 809, 898 ]
 		};
+
 		const indexes = regions[region as keyof typeof regions];
 		const limit = indexes[1] - indexes[0];
 		const offset = indexes[0];
 
-		const results = await this.getPokemonByRegionGateway.execute(limit, offset);
+		const data = await this.getPokemonByRegionGateway.execute(limit, offset);
+		const results = data.results.map(({ url }: NameUrl) => url);
 		return await this.getAllPokemonByRegionGateway.execute(results);
 	}
 }
