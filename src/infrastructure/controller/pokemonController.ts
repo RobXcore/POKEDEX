@@ -72,7 +72,7 @@ export class PokemonController {
 
 	async getPokemonByRegion (req: Request, res: Response): Promise<void> {
 		const { region } = req.params;
-		if (REGIONS.some((regionArr) => regionArr.includes(region))) {
+		if (!REGIONS.some((regionArr) => region.includes(regionArr))) {
 			throw new RequestParamException(INVALID_REGION_ERROR_MESSAGE, BAD_REQUEST_STATUS_CODE);
 		} else {
 			const pokeRes = await this.IGetPokemonByRegion.execute(region);
