@@ -7,6 +7,7 @@ import { IGetPokemonByType } from "../../domain/port/input/IGetPokemonByType";
 import PokemonListToPokemonByTypeResponse from "./mapper/PokemonListToPokemonByTypeResponseMapper";
 import { IGetPokemonByRegion } from "../../domain/port/input/IGetPokemonByRegion";
 
+const REGIONS = [ "kanto", "johto", "hoenn", "sinnoh", "unova", "kalos", "alola", "galar" ];
 const BAD_REQUEST_STATUS_CODE = 400;
 const INVALID_REGION_ERROR_MESSAGE = "La región ingresada no existe en el universo Pokemon";
 const INVALID_OFFSET_ERROR_MESSAGE = "El offset enviado no es numérico";
@@ -71,15 +72,7 @@ export class PokemonController {
 
 	async getPokemonByRegion (req: Request, res: Response): Promise<void> {
 		const { region } = req.params;
-		if (
-			region !== "kanto" &&
-			region !== "johto" &&
-			region !== "hoenn" &&
-			region !== "sinnoh" &&
-			region !== "unova" &&
-			region !== "kalos" &&
-			region !== "galar"
-		) {
+		if (REGIONS.some((regionArr) => regionArr.includes(region))) {
 			throw new RequestParamException(INVALID_REGION_ERROR_MESSAGE, BAD_REQUEST_STATUS_CODE);
 		} else {
 			const pokeRes = await this.IGetPokemonByRegion.execute(region);
