@@ -6,6 +6,9 @@ import { GetPokemonByIdUseCase } from "../../domain/usecase/getPokemonByIdUseCas
 import { PokemonController } from "../controller/pokemonController";
 import { GetPokemonByTypeUseCase } from "../../domain/usecase/GetPokemonByTypeUseCase";
 import { GetPokemonTypeGateway } from "../gateway/GetPokemonTypeGateway";
+import { GetPokemonByRegionUseCase } from "../../domain/usecase/getPokemonByRegionUseCase";
+import { GetAllPokemonByRegionGateway } from "../gateway/GetAllPokemonByRegionGateway";
+import { GetPokemonByRegionGateway } from "../gateway/GetPokemonByRegionGateway";
 
 const getPokemonListGateway = new GetPokemonListGateway();
 const getPokemonByUrlGateway = new GetPokemonByUrlGateway();
@@ -21,8 +24,13 @@ const getPokemonByTypeUseCase = new GetPokemonByTypeUseCase(
 	getPokemonByUrlGateway
 );
 
+const gateway = new GetPokemonByRegionGateway();
+const allGateway = new GetAllPokemonByRegionGateway();
+const getPokemonByRegionuseCase = new GetPokemonByRegionUseCase(gateway, allGateway);
+
 export const pokemonController = new PokemonController(
 	getAllPokemonUseCase,
 	getPokemonByIdUseCase,
-	getPokemonByTypeUseCase
+	getPokemonByTypeUseCase,
+	getPokemonByRegionuseCase
 );
