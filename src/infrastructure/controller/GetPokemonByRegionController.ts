@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import { IGetPokemonByRegion } from "../../domain/port/input/IGetPokemonByRegion";
-import { RequestParamException } from "../exception/RequstParamException";
+import { RequestParamException } from "../exception/RequestParamException";
+
+const INVALID_REGION_ERROR_MESSAGE = "La región ingresada no existe en el universo Pokemon";
+const BAD_REQUEST_STATUS_CODE = 400;
 
 export class GetPokemonByRegionController {
 	constructor (private readonly pokemonByRegionUseCase: IGetPokemonByRegion) {
@@ -17,10 +20,7 @@ export class GetPokemonByRegionController {
 			region !== "kalos" &&
 			region !== "galar"
 		) {
-			throw new RequestParamException(
-				`La region ${region} no existe, hora de jugar Pokemon!`,
-				404
-			);
+			throw new RequestParamException(INVALID_REGION_ERROR_MESSAGE, BAD_REQUEST_STATUS_CODE);
 		} else {
 			const pokeRes = await this.pokemonByRegionUseCase.execute(region);
 			res.statusCode = 200;

@@ -12,17 +12,17 @@ const getPokemonByUrlGateway = new GetPokemonByUrlGateway();
 const getPokemonTypeGateway = new GetPokemonTypeGateway();
 const getPokemonByIdGateway = new GetPokemonByIdGateway();
 const getAllPokemonUseCase = new GetAllPokemonUseCase(
-  getPokemonListGateway,
-  getPokemonByUrlGateway
+	getPokemonListGateway,
+	getPokemonByUrlGateway
 );
 const getPokemonByIdUseCase = new GetPokemonByIdUseCase(getPokemonByIdGateway);
 const getPokemonByTypeUseCase = new GetPokemonByTypeUseCase(
-  getPokemonTypeGateway,
-  getPokemonByUrlGateway
+	getPokemonTypeGateway,
+	getPokemonByUrlGateway
 );
 
 export const pokemonController = new PokemonController(
-  getAllPokemonUseCase,
-  getPokemonByIdUseCase,
-  getPokemonByTypeUseCase
+	getAllPokemonUseCase,
+	getPokemonByIdUseCase,
+	getPokemonByTypeUseCase
 );
