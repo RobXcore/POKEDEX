@@ -24,13 +24,16 @@ const getPokemonByTypeUseCase = new GetPokemonByTypeUseCase(
 	getPokemonByUrlGateway
 );
 
-const gateway = new GetPokemonByRegionGateway();
-const allGateway = new GetAllPokemonByRegionGateway();
-const getPokemonByRegionuseCase = new GetPokemonByRegionUseCase(gateway, allGateway);
+const getPokemonByRegionGateway = new GetPokemonByRegionGateway();
+const allPokemonByRegionGateway = new GetAllPokemonByRegionGateway();
+const getPokemonByRegionUseCase = new GetPokemonByRegionUseCase(
+	getPokemonByRegionGateway,
+	allPokemonByRegionGateway
+);
 
 export const pokemonController = new PokemonController(
 	getAllPokemonUseCase,
 	getPokemonByIdUseCase,
 	getPokemonByTypeUseCase,
-	getPokemonByRegionuseCase
+	getPokemonByRegionUseCase
 );
