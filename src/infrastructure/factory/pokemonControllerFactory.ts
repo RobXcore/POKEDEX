@@ -6,23 +6,34 @@ import { GetPokemonByIdUseCase } from "../../domain/usecase/getPokemonByIdUseCas
 import { PokemonController } from "../controller/pokemonController";
 import { GetPokemonByTypeUseCase } from "../../domain/usecase/GetPokemonByTypeUseCase";
 import { GetPokemonTypeGateway } from "../gateway/GetPokemonTypeGateway";
+import { GetPokemonByRegionUseCase } from "../../domain/usecase/getPokemonByRegionUseCase";
+import { GetAllPokemonByRegionGateway } from "../gateway/GetAllPokemonByRegionGateway";
+import { GetPokemonByRegionGateway } from "../gateway/GetPokemonByRegionGateway";
 
 const getPokemonListGateway = new GetPokemonListGateway();
 const getPokemonByUrlGateway = new GetPokemonByUrlGateway();
 const getPokemonTypeGateway = new GetPokemonTypeGateway();
 const getPokemonByIdGateway = new GetPokemonByIdGateway();
 const getAllPokemonUseCase = new GetAllPokemonUseCase(
-  getPokemonListGateway,
-  getPokemonByUrlGateway
+	getPokemonListGateway,
+	getPokemonByUrlGateway
 );
 const getPokemonByIdUseCase = new GetPokemonByIdUseCase(getPokemonByIdGateway);
 const getPokemonByTypeUseCase = new GetPokemonByTypeUseCase(
-  getPokemonTypeGateway,
-  getPokemonByUrlGateway
+	getPokemonTypeGateway,
+	getPokemonByUrlGateway
+);
+
+const getPokemonByRegionGateway = new GetPokemonByRegionGateway();
+const allPokemonByRegionGateway = new GetAllPokemonByRegionGateway();
+const getPokemonByRegionUseCase = new GetPokemonByRegionUseCase(
+	getPokemonByRegionGateway,
+	allPokemonByRegionGateway
 );
 
 export const pokemonController = new PokemonController(
-  getAllPokemonUseCase,
-  getPokemonByIdUseCase,
-  getPokemonByTypeUseCase
+	getAllPokemonUseCase,
+	getPokemonByIdUseCase,
+	getPokemonByTypeUseCase,
+	getPokemonByRegionUseCase
 );
