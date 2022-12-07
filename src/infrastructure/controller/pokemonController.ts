@@ -28,8 +28,6 @@ const INVALID_ID_ERROR_MESSAGE = "El id ingresado no es válido";
 const MISSING_TYPE_IN_PATH_ERROR_MESSAGE =
   "Debe indicarse en el path un nombre de tipo en inglés o algún número entero como id entre 1 y 18 inclusive.";
 
-let validation;
-
 export class PokemonController {
   constructor(
     private readonly IGetAllPokemon: IGetAllPokemon,
@@ -45,7 +43,7 @@ export class PokemonController {
 
   async getAllPokemon(req: Request, res: Response): Promise<void> {
     const offset = Number(req.query.offset) || 0;
-    validation = validate(offset, offsetSchema);
+    const validation = validate(offset, offsetSchema);
 
     if (!validation.valid) {
       throw new RequestParamException(INVALID_OFFSET_ERROR_MESSAGE, BAD_REQUEST_STATUS_CODE);
@@ -57,7 +55,7 @@ export class PokemonController {
 
   async getPokemonById(req: Request, res: Response): Promise<void> {
     const pokemonId = +req.params.id;
-    validation = validate(pokemonId, pokemonIdSchema);
+    const validation = validate(pokemonId, pokemonIdSchema);
 
     if (!validation.valid) {
       throw new RequestParamException(INVALID_ID_ERROR_MESSAGE, BAD_REQUEST_STATUS_CODE);
@@ -69,7 +67,7 @@ export class PokemonController {
 
   async getPokemonByType(req: Request, res: Response): Promise<void> {
     const pokemonType = req.params.type;
-    validation = validate(pokemonType, pokemonTypeSchema);
+    const validation = validate(pokemonType, pokemonTypeSchema);
 
     if (!validation.valid) {
       throw new RequestParamException(MISSING_TYPE_IN_PATH_ERROR_MESSAGE, BAD_REQUEST_STATUS_CODE);
@@ -81,7 +79,7 @@ export class PokemonController {
 
   async getPokemonByRegion(req: Request, res: Response): Promise<void> {
     const pokemonRegion = req.params.region;
-    validation = validate(pokemonRegion, pokemonRegionSchema);
+    const validation = validate(pokemonRegion, pokemonRegionSchema);
 
     if (!validation.valid) {
       throw new RequestParamException(INVALID_REGION_ERROR_MESSAGE, BAD_REQUEST_STATUS_CODE);
