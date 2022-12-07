@@ -35,7 +35,7 @@ export class PokemonController {
   }
 
   async getAllPokemon(req: Request, res: Response): Promise<void> {
-    const offset = Number(req.query.offset);
+    const offset = Number(req.query.offset) || 0;
     const validation = validate(offset, offsetSchema);
 
     if (!validation.valid) {
