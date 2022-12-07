@@ -1,10 +1,16 @@
 import { Request, Response } from "express";
-import { IGetAllPokemon } from "../../domain/port/input/IGetAllPokemon";
 import { RequestParamException } from "../exception/RequestParamException";
+import { IGetAllPokemon } from "../../domain/port/input/IGetAllPokemon";
 import { IGetPokemonById } from "../../domain/port/input/IGetPokemonById";
-import AllPokemonToAllPokemonResponse from "./mapper/allPokemonToAllPokemonResponseMapper";
 import { IGetPokemonByType } from "../../domain/port/input/IGetPokemonByType";
+import AllPokemonToAllPokemonResponse from "./mapper/allPokemonToAllPokemonResponseMapper";
 import PokemonListToPokemonByTypeResponse from "./mapper/PokemonListToPokemonByTypeResponseMapper";
+
+/* Schemas and validators*/
+import { validate } from "jsonschema";
+import pokemonIdSchema from "./schemas/request/pokemonIdSchema.json";
+import pokemonTypeSchema from "./schemas/request/pokemonTypeSchema.json";
+import offsetSchema from "./schemas/request/offsetSchema.json";
 
 const BAD_REQUEST_STATUS_CODE = 400;
 const INVALID_OFFSET_ERROR_MESSAGE = "El offset enviado no es numérico";
@@ -24,54 +30,35 @@ export class PokemonController {
   }
 
   async getAllPokemon(req: Request, res: Response): Promise<void> {
-    let requestOffset;
+    const offset = Number(req.query.offset);
+    const validation = validate(offset, offsetSchema);
 
-    !req.query.offset
-      ? (requestOffset = 0)
-      : (requestOffset = +req.query.offset);
-
-    if (isNaN(requestOffset)) {
-      throw new RequestParamException(
-        INVALID_OFFSET_ERROR_MESSAGE,
-        BAD_REQUEST_STATUS_CODE
-      );
+    if (!validation.valid) {
+      throw new RequestParamException(INVALID_OFFSET_ERROR_MESSAGE, BAD_REQUEST_STATUS_CODE);
     } else {
-      res.send(
-        AllPokemonToAllPokemonResponse(
-          await this.IGetAllPokemon.execute(requestOffset)
-        )
-      );
+      res.send(AllPokemonToAllPokemonResponse(await this.IGetAllPokemon.execute(offset)));
     }
   }
 
   async getPokemonById(req: Request, res: Response): Promise<void> {
-    const id = Number(req.params.id);
+    const pokemonId = +req.params.id;
+    const validation = validate(pokemonId, pokemonIdSchema);
 
-    if (isNaN(id)) {
-      throw new RequestParamException(
-        INVALID_ID_ERROR_MESSAGE,
-        BAD_REQUEST_STATUS_CODE
-      );
+    if (!validation.valid) {
+      throw new RequestParamException(INVALID_ID_ERROR_MESSAGE, BAD_REQUEST_STATUS_CODE);
     } else {
-      res.send(await this.IGetPokemonById.execute(id));
+      res.send(await this.IGetPokemonById.execute(pokemonId));
     }
   }
 
   async getPokemonByType(req: Request, res: Response): Promise<void> {
-    let typeNameOrId: string;
+    const pokemonType = req.params.type;
+    const validation = validate(pokemonType, pokemonTypeSchema);
 
-    if (!req.params.type || req.params.type.trim() === "") {
-      throw new RequestParamException(
-        MISSING_TYPE_IN_PATH_ERROR_MESSAGE,
-        BAD_REQUEST_STATUS_CODE
-      );
+    if (!validation.valid) {
+      throw new RequestParamException(MISSING_TYPE_IN_PATH_ERROR_MESSAGE, BAD_REQUEST_STATUS_CODE);
     } else {
-      typeNameOrId = req.params.type.trim();
-      res.send(
-        PokemonListToPokemonByTypeResponse(
-          await this.IGetPokemonByType.execute(typeNameOrId)
-        )
-      );
+      res.send(PokemonListToPokemonByTypeResponse(await this.IGetPokemonByType.execute(pokemonType)));
     }
   }
 }

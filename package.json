@@ -4,6 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"dependencies": {
+		"jsonschema": "^1.4.1",
 		"swagger-ui-express": "3.0.10"
 	},
 	"devDependencies": {
