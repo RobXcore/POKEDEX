@@ -1,0 +1,26 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.pokemonController = void 0;
+const getAllPokemonUseCase_1 = require("../../domain/usecase/getAllPokemonUseCase");
+const getPokemonListGateway_1 = require("../gateway/getPokemonListGateway");
+const getPokemonByUrlGateway_1 = require("../gateway/getPokemonByUrlGateway");
+const getPokemonByIdGateway_1 = require("../gateway/getPokemonByIdGateway");
+const getPokemonByIdUseCase_1 = require("../../domain/usecase/getPokemonByIdUseCase");
+const pokemonController_1 = require("../controller/pokemonController");
+const GetPokemonByTypeUseCase_1 = require("../../domain/usecase/GetPokemonByTypeUseCase");
+const GetPokemonTypeGateway_1 = require("../gateway/GetPokemonTypeGateway");
+const getPokemonByRegionUseCase_1 = require("../../domain/usecase/getPokemonByRegionUseCase");
+const GetAllPokemonByRegionGateway_1 = require("../gateway/GetAllPokemonByRegionGateway");
+const GetPokemonByRegionGateway_1 = require("../gateway/GetPokemonByRegionGateway");
+const getPokemonListGateway = new getPokemonListGateway_1.GetPokemonListGateway();
+const getPokemonByUrlGateway = new getPokemonByUrlGateway_1.GetPokemonByUrlGateway();
+const getPokemonTypeGateway = new GetPokemonTypeGateway_1.GetPokemonTypeGateway();
+const getPokemonByIdGateway = new getPokemonByIdGateway_1.GetPokemonByIdGateway();
+const getAllPokemonUseCase = new getAllPokemonUseCase_1.GetAllPokemonUseCase(getPokemonListGateway, getPokemonByUrlGateway);
+const getPokemonByIdUseCase = new getPokemonByIdUseCase_1.GetPokemonByIdUseCase(getPokemonByIdGateway);
+const getPokemonByTypeUseCase = new GetPokemonByTypeUseCase_1.GetPokemonByTypeUseCase(getPokemonTypeGateway, getPokemonByUrlGateway);
+const getPokemonByRegionGateway = new GetPokemonByRegionGateway_1.GetPokemonByRegionGateway();
+const allPokemonByRegionGateway = new GetAllPokemonByRegionGateway_1.GetAllPokemonByRegionGateway();
+const getPokemonByRegionUseCase = new getPokemonByRegionUseCase_1.GetPokemonByRegionUseCase(getPokemonByRegionGateway, allPokemonByRegionGateway);
+exports.pokemonController = new pokemonController_1.PokemonController(getAllPokemonUseCase, getPokemonByIdUseCase, getPokemonByTypeUseCase, getPokemonByRegionUseCase);
+//# sourceMappingURL=pokemonControllerFactory.js.map

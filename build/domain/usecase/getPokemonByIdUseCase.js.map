@@ -1,0 +1,1 @@
+{"version":3,"file":"getPokemonByIdUseCase.js","sourceRoot":"","sources":["../../../src/domain/usecase/getPokemonByIdUseCase.ts"],"names":[],"mappings":";;;;;;;;;;;;AAIA,MAAa,qBAAqB;IAChC,YAA6B,eAAuC;QAAvC,oBAAe,GAAf,eAAe,CAAwB;IAAG,CAAC;IAElE,OAAO,CAAC,EAAU;;YACtB,OAAO,MAAM,IAAI,CAAC,eAAe,CAAC,OAAO,CAAC,EAAE,CAAC,CAAC;QAChD,CAAC;KAAA;CACF;AAND,sDAMC"}
