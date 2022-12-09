@@ -33,7 +33,7 @@
         },
         "frontSprite": {
             "title": "The frontSprite Schema",
-            "type": "string",
+            "type": ["string", "null"],
             "examples": [
                 "string"
             ]
