@@ -8,7 +8,7 @@ export function Handler(fun: Function): any {
       await fun(req, res);
     } catch (error) {
       const ex = error as Exception;
-      res.status(ex.statusCode);
+      res.status(ex.statusCode | 500);
       res.send(MessageToErrorResponseMapper(ex.message));
     }
   };
