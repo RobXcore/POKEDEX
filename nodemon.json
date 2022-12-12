@@ -5,6 +5,9 @@
     "execMap": {
        "ts": "ts-node"
     },
+    "events": {
+      "restart": "npm run lint"
+   },
     "env": {
        "NODE_ENV": "development"
     },
