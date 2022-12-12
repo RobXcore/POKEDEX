@@ -1,1 +1,0 @@
-{"version":3,"file":"allPokemonToAllPokemonResponseMapper.js","sourceRoot":"","sources":["../../../../src/infrastructure/controller/mapper/allPokemonToAllPokemonResponseMapper.ts"],"names":[],"mappings":";;AAGA,MAAM,8BAA8B,GAAG,CAAC,OAAkB,EAAE,EAAE;IAC5D,MAAM,UAAU,GAAuB;QACrC,UAAU,EAAE,OAAO;KACpB,CAAC;IACF,OAAO,UAAU,CAAC;AACpB,CAAC,CAAC;AAEF,kBAAe,8BAA8B,CAAC"}
