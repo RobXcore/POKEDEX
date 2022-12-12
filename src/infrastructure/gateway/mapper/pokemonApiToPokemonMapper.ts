@@ -8,7 +8,7 @@ const PokemonApiToPokemonMapper = (pokemonApi: PokemonApi) => {
     name: name,
     height: height,
     weight: weight,
-    frontSprite: sprites.front_default,
+    frontSprite: sprites.front_default == null ? "" : sprites.front_default,
     types: typeMapper(types),
     abilities: abilityMapper(abilities),
   };

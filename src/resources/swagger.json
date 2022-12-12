@@ -29,7 +29,7 @@
             "in": "query",
             "required": true,
             "name": "offset",
-            "default": 0,
+            "minimum": 0,
             "type": "number"
           }
         ],
@@ -113,7 +113,7 @@
           "200": {
             "description": "ok",
             "schema": {
-              "$ref": "#/definitions/Pokemon"
+              "$ref": "#/definitions/PokemonByRegionResponse"
             }
           },
           "400": {
@@ -185,7 +185,137 @@
         "allPokemon": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Pokemon"
+            "type": "object",
+            "required": [
+              "name",
+              "height",
+              "weight",
+              "frontSprite",
+              "types",
+              "abilities"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "height": {
+                "type": "number"
+              },
+              "weight": {
+                "type": "number"
+              },
+              "frontSprite": {
+                "type": "string"
+              },
+              "types": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "url"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "abilities": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "url"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "PokemonByRegionResponse": {
+      "type": "object",
+      "required": [
+        "pokemon"
+      ],
+      "properties": {
+        "pokemon": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "height",
+              "weight",
+              "frontSprite",
+              "types",
+              "abilities"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "height": {
+                "type": "number"
+              },
+              "weight": {
+                "type": "number"
+              },
+              "frontSprite": {
+                "type": "string"
+              },
+              "types": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "url"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "abilities": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "url"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -204,7 +334,65 @@
         "pokemon": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Pokemon"
+            "type": "object",
+            "required": [
+              "name",
+              "height",
+              "weight",
+              "frontSprite",
+              "types",
+              "abilities"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "height": {
+                "type": "number"
+              },
+              "weight": {
+                "type": "number"
+              },
+              "frontSprite": {
+                "type": "string"
+              },
+              "types": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "url"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "abilities": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "url"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -230,29 +418,38 @@
         "types": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/NameUrl"
+            "type": "object",
+            "required": [
+              "name",
+              "url"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            }
           }
         },
         "abilities": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/NameUrl"
+            "type": "object",
+            "required": [
+              "name",
+              "url"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            }
           }
-        }
-      }
-    },
-    "NameUrl": {
-      "type": "object",
-      "required": [
-        "name",
-        "url"
-      ],
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "url": {
-          "type": "string"
         }
       }
     },
