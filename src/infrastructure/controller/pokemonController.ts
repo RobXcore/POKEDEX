@@ -10,16 +10,9 @@ import { responseValidator } from "./util/ResponseValidator";
 
 /* Schemas and validators*/
 import { validate } from "jsonschema";
-/* Request schemas */
-import pokemonIdSchema from "./schemas/request/pokemonIdSchema.json";
-import pokemonTypeSchema from "./schemas/request/pokemonTypeSchema.json";
-import offsetSchema from "./schemas/request/offsetSchema.json";
-import pokemonRegionSchema from "./schemas/request/pokemonRegionSchema.json";
-/* Response schemas*/
-import allPokemonResponseSchema from "./schemas/response/allPokemonResponseSchema.json";
-import pokemonResponseSchema from "./schemas/response/pokemonResponseSchema.json";
-import pokemonListByTypeResponseSchema from "./schemas/response/pokemonListByTypeResponseSchema.json";
-import pokemonListByRegionResponseSchema from "./schemas/response/pokemonListByRegionResponseSchema.json";
+import apidoc from "../../resources/swagger.json";
+import requestParams from "../controller/schemas/request/requestParams.json";
+import PokemonListToPokemonByRegionResponseMapper from "./mapper/PokemonListToPokemonByRegionResponseMapper";
 
 const BAD_REQUEST_STATUS_CODE = 400;
 const INVALID_REGION_ERROR_MESSAGE = "La región ingresada no existe en el universo Pokemon";
@@ -43,49 +36,51 @@ export class PokemonController {
 
   async getAllPokemon(req: Request, res: Response): Promise<void> {
     const offset = Number(req.query.offset) || 0;
-    const validation = validate(offset, offsetSchema);
+    const validation = validate(offset, requestParams.definitions.offset);
 
     if (!validation.valid) {
       throw new RequestParamException(INVALID_OFFSET_ERROR_MESSAGE, BAD_REQUEST_STATUS_CODE);
     } else {
       const allPokemon = AllPokemonToAllPokemonResponse(await this.IGetAllPokemon.execute(offset));
-      res.send(responseValidator(allPokemon, allPokemonResponseSchema));
+      res.send(responseValidator(allPokemon, apidoc.definitions.AllPokemonResponse));
     }
   }
 
   async getPokemonById(req: Request, res: Response): Promise<void> {
-    const pokemonId = +req.params.id;
-    const validation = validate(pokemonId, pokemonIdSchema);
+    const pokemonId = Number(req.params.id);
+    const validation = validate(pokemonId, requestParams.definitions.pokemonId);
 
     if (!validation.valid) {
       throw new RequestParamException(INVALID_ID_ERROR_MESSAGE, BAD_REQUEST_STATUS_CODE);
     } else {
       const pokemon = await this.IGetPokemonById.execute(pokemonId);
-      res.send(responseValidator(pokemon, pokemonResponseSchema));
+      res.send(responseValidator(pokemon, apidoc.definitions.Pokemon));
     }
   }
 
   async getPokemonByType(req: Request, res: Response): Promise<void> {
     const pokemonType = req.params.type;
-    const validation = validate(pokemonType, pokemonTypeSchema);
+    const validation = validate(pokemonType, requestParams.definitions.pokemonType);
 
     if (!validation.valid) {
       throw new RequestParamException(MISSING_TYPE_IN_PATH_ERROR_MESSAGE, BAD_REQUEST_STATUS_CODE);
     } else {
       const pokemonListByType = PokemonListToPokemonByTypeResponse(await this.IGetPokemonByType.execute(pokemonType));
-      res.send(responseValidator(pokemonListByType, pokemonListByTypeResponseSchema));
+      res.send(responseValidator(pokemonListByType, apidoc.definitions.PokemonByTypeResponse));
     }
   }
 
   async getPokemonByRegion(req: Request, res: Response): Promise<void> {
     const pokemonRegion = req.params.region;
-    const validation = validate(pokemonRegion, pokemonRegionSchema);
+    const validation = validate(pokemonRegion, requestParams.definitions.pokemonRegion);
 
     if (!validation.valid) {
       throw new RequestParamException(INVALID_REGION_ERROR_MESSAGE, BAD_REQUEST_STATUS_CODE);
     } else {
-      const pokemonListByRegion = await this.IGetPokemonByRegion.execute(pokemonRegion);
-      res.send(responseValidator(pokemonListByRegion, pokemonListByRegionResponseSchema));
+      const pokemonListByRegion = PokemonListToPokemonByRegionResponseMapper(
+        await this.IGetPokemonByRegion.execute(pokemonRegion)
+      );
+      res.send(responseValidator(pokemonListByRegion, apidoc.definitions.PokemonByRegionResponse));
     }
   }
 }
