@@ -26,7 +26,9 @@
     "build": "npm run pre-commit && tsc -p ./",
     "test": "npm run pre-commit && echo \"Error: no test specified\" && exit 1",
     "pre-commit": "copy pre-commit .git/hooks/pre-commit || cp pre-commit .git/hooks/pre-commit && chmod 775 .git/hooks/pre-commit",
-    "format": "prettier --ignore-path .gitignore node_modules build --write ."
+    "format": "prettier --ignore-path .gitignore node_modules build --write .",
+    "lint": "eslint . --ext .{js,ts,tsx}",
+    "lint.fix": "npx eslint --fix ."
   },
   "keywords": [],
   "author": "",
