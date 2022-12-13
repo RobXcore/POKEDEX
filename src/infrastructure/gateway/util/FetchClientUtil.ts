@@ -20,6 +20,6 @@ const get = async (url: string) => {
   }
 };
 
-const post = () => {};
+//const post = () => {};
 
-export default { get, post };
+export default { get };

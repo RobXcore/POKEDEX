@@ -3,11 +3,11 @@ import { NameUrl } from "../../../domain/model/IPokemon";
 export interface PokemonTypeApi {
   id: number;
   name: string;
-  damage_relations: {};
+  damage_relations: object;
   past_damage_relations: [];
   game_indices: [];
-  generation: {};
-  move_damage_class: {};
+  generation: object;
+  move_damage_class: object;
   names: [];
   pokemon: PokemonObject[];
   moves: NameUrl[];

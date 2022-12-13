@@ -1,0 +1,25 @@
+root = true
+
+//Las siguientes reglas que aplican para todo el código
+[*]
+indent_style = space
+indent_size = 3
+
+//Cada vez que se termina la línea, pasa a la siguiente
+end_of_line = lf 
+
+//Remueve o limpia espacios locos x ahí dando vueltas
+trim_trailing_whitespace = true
+
+/*
+Inserta línea extra al final de cada archivo, 
+esto ya que GitHub a veces da problemas x línea final 
+de estandarización faltante
+*/
+insert_final_newline = true
+
+charset = utf-8
+
+//Las siguientes reglas aplican para todos los archivos .md
+[*.md]
+indent_size = 4

@@ -1,11 +1,36 @@
 #!/bin/sh
 npm install
 
+echo "---------------------------Format---------------------------"
+npm run format
+formatTaskStatus=$?
+
+if [[ $formatTaskStatus == 0 ]]
+then
+        echo "Format Success"
+else
+        echo "Format Failed"
+	      exit 1
+fi
+
+echo "---------------------------Lint---------------------------"
+npm run lint
+npm run lint.fix
+lintTaskStatus=$?
+
+if [[ $lintTaskStatus == 0 ]]
+then
+        echo "Lint Success"
+else
+        echo "Lint Failed"
+	      exit 1
+fi
+
 echo "---------------------------Build---------------------------"
 npm run build
-statusClean=$?
+buildTaskStatus=$?
 
-if [[ $statusClean == 0 ]]
+if [[ $buildTaskStatus == 0 ]]
 then
         echo "Build Success"
 else
