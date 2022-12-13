@@ -10,7 +10,7 @@ export interface PokemonApi {
   sprites: Sprite;
 }
 
-interface Sprite {
+export interface Sprite {
   front_default: string;
 }
 
