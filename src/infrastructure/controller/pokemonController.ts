@@ -1,12 +1,21 @@
 import { Request, Response } from "express";
-import { IGetAllPokemon } from "../../domain/port/input/IGetAllPokemon";
 import { RequestParamException } from "../exception/RequestParamException";
+import { IGetAllPokemon } from "../../domain/port/input/IGetAllPokemon";
 import { IGetPokemonById } from "../../domain/port/input/IGetPokemonById";
-import AllPokemonToAllPokemonResponse from "./mapper/allPokemonToAllPokemonResponseMapper";
 import { IGetPokemonByType } from "../../domain/port/input/IGetPokemonByType";
+import AllPokemonToAllPokemonResponse from "./mapper/allPokemonToAllPokemonResponseMapper";
 import PokemonListToPokemonByTypeResponse from "./mapper/PokemonListToPokemonByTypeResponseMapper";
+import { IGetPokemonByRegion } from "../../domain/port/input/IGetPokemonByRegion";
+import { responseValidator } from "./util/ResponseValidator";
+
+/* Schemas and validators*/
+import { validate } from "jsonschema";
+import apidoc from "../../resources/swagger.json";
+import requestParams from "../controller/schemas/request/requestParams.json";
+import PokemonListToPokemonByRegionResponseMapper from "./mapper/PokemonListToPokemonByRegionResponseMapper";
 
 const BAD_REQUEST_STATUS_CODE = 400;
+const INVALID_REGION_ERROR_MESSAGE = "La región ingresada no existe en el universo Pokemon";
 const INVALID_OFFSET_ERROR_MESSAGE = "El offset enviado no es numérico";
 const INVALID_ID_ERROR_MESSAGE = "El id ingresado no es válido";
 const MISSING_TYPE_IN_PATH_ERROR_MESSAGE =
@@ -16,62 +25,62 @@ export class PokemonController {
   constructor(
     private readonly IGetAllPokemon: IGetAllPokemon,
     private readonly IGetPokemonById: IGetPokemonById,
-    private readonly IGetPokemonByType: IGetPokemonByType
+    private readonly IGetPokemonByType: IGetPokemonByType,
+    private readonly IGetPokemonByRegion: IGetPokemonByRegion
   ) {
     this.getAllPokemon = this.getAllPokemon.bind(this);
     this.getPokemonById = this.getPokemonById.bind(this);
     this.getPokemonByType = this.getPokemonByType.bind(this);
+    this.getPokemonByRegion = this.getPokemonByRegion.bind(this);
   }
 
   async getAllPokemon(req: Request, res: Response): Promise<void> {
-    let requestOffset;
+    const offset = Number(req.query.offset) || 0;
+    const validation = validate(offset, requestParams.definitions.offset);
 
-    !req.query.offset
-      ? (requestOffset = 0)
-      : (requestOffset = +req.query.offset);
-
-    if (isNaN(requestOffset)) {
-      throw new RequestParamException(
-        INVALID_OFFSET_ERROR_MESSAGE,
-        BAD_REQUEST_STATUS_CODE
-      );
+    if (!validation.valid) {
+      throw new RequestParamException(INVALID_OFFSET_ERROR_MESSAGE, BAD_REQUEST_STATUS_CODE);
     } else {
-      res.send(
-        AllPokemonToAllPokemonResponse(
-          await this.IGetAllPokemon.execute(requestOffset)
-        )
-      );
+      const allPokemon = AllPokemonToAllPokemonResponse(await this.IGetAllPokemon.execute(offset));
+      res.send(responseValidator(allPokemon, apidoc.definitions.AllPokemonResponse));
     }
   }
 
   async getPokemonById(req: Request, res: Response): Promise<void> {
-    const id = Number(req.params.id);
+    const pokemonId = Number(req.params.id);
+    const validation = validate(pokemonId, requestParams.definitions.pokemonId);
 
-    if (isNaN(id)) {
-      throw new RequestParamException(
-        INVALID_ID_ERROR_MESSAGE,
-        BAD_REQUEST_STATUS_CODE
-      );
+    if (!validation.valid) {
+      throw new RequestParamException(INVALID_ID_ERROR_MESSAGE, BAD_REQUEST_STATUS_CODE);
     } else {
-      res.send(await this.IGetPokemonById.execute(id));
+      const pokemon = await this.IGetPokemonById.execute(pokemonId);
+      res.send(responseValidator(pokemon, apidoc.definitions.Pokemon));
     }
   }
 
   async getPokemonByType(req: Request, res: Response): Promise<void> {
-    let typeNameOrId: string;
+    const pokemonType = req.params.type;
+    const validation = validate(pokemonType, requestParams.definitions.pokemonType);
 
-    if (!req.params.type || req.params.type.trim() === "") {
-      throw new RequestParamException(
-        MISSING_TYPE_IN_PATH_ERROR_MESSAGE,
-        BAD_REQUEST_STATUS_CODE
-      );
+    if (!validation.valid) {
+      throw new RequestParamException(MISSING_TYPE_IN_PATH_ERROR_MESSAGE, BAD_REQUEST_STATUS_CODE);
     } else {
-      typeNameOrId = req.params.type.trim();
-      res.send(
-        PokemonListToPokemonByTypeResponse(
-          await this.IGetPokemonByType.execute(typeNameOrId)
-        )
+      const pokemonListByType = PokemonListToPokemonByTypeResponse(await this.IGetPokemonByType.execute(pokemonType));
+      res.send(responseValidator(pokemonListByType, apidoc.definitions.PokemonByTypeResponse));
+    }
+  }
+
+  async getPokemonByRegion(req: Request, res: Response): Promise<void> {
+    const pokemonRegion = req.params.region;
+    const validation = validate(pokemonRegion, requestParams.definitions.pokemonRegion);
+
+    if (!validation.valid) {
+      throw new RequestParamException(INVALID_REGION_ERROR_MESSAGE, BAD_REQUEST_STATUS_CODE);
+    } else {
+      const pokemonListByRegion = PokemonListToPokemonByRegionResponseMapper(
+        await this.IGetPokemonByRegion.execute(pokemonRegion)
       );
+      res.send(responseValidator(pokemonListByRegion, apidoc.definitions.PokemonByRegionResponse));
     }
   }
 }
